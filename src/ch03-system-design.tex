@@ -1,0 +1,44 @@
+\section{System Design}
+\label{ch:system-design}
+
+\epigraph{That men do not learn very much from the lessons of history is the most important of all the lessons that history has to teach.}{Aldous Huxley}
+
+\subsection{Machine Learning Algorithm}
+
+\subsubsection{Tool and Library}
+%weights
+PyTorch\cite{ketkar2017introduction} and TensorFlow\cite{abadi2016tensorflow} are currently the most popular methods for investigating deep learning and neural networks. PyTorch is more useful for researchers, enthusiasts and Individual developers to quickly build prototype in small-scale projects. TensorFlow is more suitable for large-scale deployments, especially when cross-platform and embedded deployments are required. In our research, PyTorch was selected for its vast repository of libraries to handle dataset preprocessing, statistical analysis, plotting, and more.\cite{paszke2019pytorch}.
+
+\subsubsection{Neural Network Model}
+%node and item
+\subsubsection{Training Weights}
+
+\subsection{System Architecture Diagram}
+\subsubsection{Recommendation Strategy}
+\paragraph{Recommendation Style}
+\begin{itemize}
+\item[(a)]\textbf{User-Based}\\
+The user-based recommendation strategy more considers the interests of new user and other users with the same hobbies, recommends items that other users like / visited to the new user, and has little to do with new user's current behavior.What will be recommended to a new user, depends on what the other users have visited before. The recommended items are the favorite items of users with the same hobby, so it has a hotspot effect. it can recommend the items that the other users have just visited. It has strong real-time performance, especially the newly introduced hot spots, which can spread quickly and solve the cold start problem of new-item.
+\item[(b)]\textbf{Item-Based}\\
+Item-based mainly uses users' historical interests to make recommendations. Recommending items that are similar to the user's history. This method has a lot to do with the user's current behavior. The similarity between the item recommended to the user and the item previously selected by the user is understandable by the user, which is called Interpretable. Most of the recommended items are not popular, but are related to the interests of users. This recommendation method has the highest accuracy when the user's interest is long-term and fixed. The significance of Item-based recommendation is to help users find items related to their interests. The recommended item is not related to user identity, so it is better to solve the problem of new users.
+\par Badrul et al.\cite{sarwar2001item} compared the performance of user-based and item-based and demonstrated that the item-based algorithm provides better quality of prediction than the user-based algorithm.
+\item[(c)]\textbf{Demographic-Based}\\
+According to the basic information of the system user, find out the relevance of the user, and then make recommendations. At present, it is rarely used alone in large systems, and it is usually used in combination with other recommendation algorithms. The usual method is to classify the user based on the user's registration information, and then recommend to the user the items in the category to which she belongs. In this paper, we use gender, age and occupation of user as feature of demographic-based recommendation method.
+\item[(d)]\textbf{Content-Based}\\
+Based on the user's past browsing history, make recommendations to the user that he/she has not viewed. Recommendations are generally based on keywords or content features. For example, if a user has previously chosen to be interested in a certain director's movie, the user will be recommended with the other movie works of this director. The advantage of this method is that there is no popularity bias, items with rare features can be recommended, and user content characteristics can be used to provide recommendation explanations. The disadvantage is that the content must be machine-readable and meaningful, and the features of the recommended content need to be archived in advance.
+\item[(e)]\textbf{Popularity-Based}\\
+Popularity-Based is
+\end{itemize}
+\subsubsection{Recommendation Explanation Strategy}
+\subsubsection{Recommendation Explanation Adaptation Strategy}
+%rule based
+
+\subsection{User Interface Prototype} 
+
+\subsubsection{Development Tool and Language}
+\subsubsection{Prototype}
+\subsubsection{}
+
+\subsection{}
+
+\cleardoublepage
