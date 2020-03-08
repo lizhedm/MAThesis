@@ -209,7 +209,113 @@ The second problem is efficiency. The recommendation system is an online system.
 
 ---
 
+### Recommendation Explanation Strategy
 
+在构建UMNN的工作中，将user node和movie node建立连接的同时就将所有连接方式记录下。并在User Interface发送来movie id list，UMNN发送recommend id list时，把对应的连接方式作为response数据的一部分传送给User Interface。
+
+User node和movie node建立连接的方式，我们之前在Recommendation Style章节中给出了介绍，对应每一种recommendation style都有之与其对应的Recommendation Explanation。
+
+In the construction of UMNN, all connection methods are recorded while the user node and the movie node are connected. When the User Interface sends a movie id list and UMNN sends a recommended id list, the corresponding connection method is transmitted to the User Interface as part of the response data.
+
+We introduced the method for establishing a connection between the User node and the movie node in the Recommendation Style section. Each recommendation style can be relevant to a Recommendation Explanation Template.
+
+---
+
+UserNode--MovieNode--UserNode
+MovieNode--UserNode--MovieNode
+DemographicFeature--UserNode--MovieNode
+UserNode--MovieNode--ContentFeature
+
+以上四种连接方式对应的四种推荐方法是user-based，item-based，demographic-based和content-based.对这四种recommendation style建立explanation template.
+
+The four recommended methods corresponding to the above four connection methods are user-based, item-based, demographic-based, and content-based. Establish the explanation templates for these four recommendation styles.
+
+---
+
+
+* 1. user-based: (uid_1) is recommended with (iid_1) because (uid_2) is similar with (uid_1) and (uid_2) likes (iid_1). __Uid{uid-1}-Iid{iid1}-Uid{uid2}__
+* 2. item-based: (iid_1) is recommended to (uid_1) because (iid_1) that is similar with (iid_2) which (uid_1) liked before. __Iid{iid1}-Uid{uid-1}-Iid{iid2}__
+* 3. demographic-based: (iid_1) is recommended to (uid_1) because (uid_1)'s (DemographicFeatureType) is (DemographicFeatureValue). __Iid{iid1}-Uid{uid-1}-DFType{type}-DFValue{value}__
+* 4. content-based: (uid_1) is recommend with (iid_1) because (iid_1)'s (CFtype) is (CFvalue) __Uid{uid-1}-Iid{iid}-CFType{type}-CFValue{value}__
+* 5. popularity-based:
+
+---
+
+### Recommendation Explanation Adaptation Strategy
+
+一个推荐系统的好坏往往需要全链路的评定，贯穿于用户的整个交互过程。之所以说好的推荐系统难以定义，是因为虽然算法是核心，但是个性化推荐往往不止由算法构成，这背后需要各种技术支撑。它是算法和各种技术架构以及交互设计等等混合在一起的产物。
+
+The quality of a recommendation system usually requires an evaluation of the entire recommendation behavior, which runs through the user's whole interaction process. A recommendation system is good or not good, which is difficult to define. The algorithm is the core of the recommendation system, while a variety of other technologies and factors have a significant impact on personalized recommendations. The excellent recommendation system is a hybrid product of algorithms, various technics, and interaction designs.
+
+---
+
+从最开始信息较少时候搜索引擎的使用，到信息较多后的推荐系统的产生，再到提供更好交互体验的可解释性推荐系统，用户获取信息的方式在不断的改良和优化，我们在本文中使用了之前的论文很少研究过的adaptation这种方法，来进一步使推荐内容与用户之间的交互更多，从而使用户更活跃的参与到推荐系统的运行中，而不再是作为一个简单的信息接收者。通过让用户多伦次的使用我们的推荐系统，采集每一轮用户的行为特征输入作为正反馈来促进推荐系统的各方面性能。
+
+From the use of search engines when there is less information at the beginning of the Internet, to the use of recommendation systems after more information appears on the Internet, to the applied of interpretable recommendation systems that provide a better interactive experience, the way users obtain information is constantly improved and optimized. In this paper, we use the adaptation method, which was rarely studied in previous related papers, to further increase the interaction between the recommended content and the user, so that the user is more actively involved in the operation of the recommendation system, instead of as a simple message receiver. By allowing users to use our recommendation system multiple times, we collect the input of user behavior characteristics for each round as positive feedback to promote various aspects of the performance of the recommendation system.
+
+---
+
+We find some available and reasonable recommendation explanation adaptation strategies:
+
+
+---
+
+
+Adaptation for the way of showing:
+
+将explanation的显示方式进行adapt。原本系统的movie recommendation explanation是自然语言构成的可理解语句，但是有时候千篇一律的文字描述用户并没有兴趣，而且对用户来说，接收所有explanation中的文字信息并不是必要的。从语言学上我们了解到，用户只需要阅读到关键的几个词语，大多数情况下，他就已经可以通过自我串联排列扩充联想这些词语而理解到explanation需要传达的意思。
+
+Adapt the shown of the explanation. The original movie recommendation explanation of the system is an understandable sentence using natural language, but sometimes the user is not interested in the uniform text description, and it is not necessary for the user to receive all the text information in the recommendation explanation. From linguistics, we know that the user only needs to read a few keywords, In most cases, he can connect, arrange, extend and imagine the keywords to understand the meaning of recommendation explanation.
+
+---
+
+接下来提出一种adaptation view的可能解决方案：使用word cloud。我们可以将电影的explanation内容与电影在wikipedia和OMDb上的metadata相结合，做一些数据处理之后，生成一个word cloud，这个word cloud可以包含许多电影的重要相关的tag或者feature，用户可以通过这个word cloud就可以在一定程度上明白推荐的理由。
+
+We propose a possible solution for the adaptation view: use word cloud. We can combine the movie’s explanation content with the movie ’s metadata on wikipedia and OMDb. After doing some data processing, a word cloud can be generated. This word cloud could contain many important movie related tags or features. user can understand the reason for recommendation by the word cloud.
+
+As shown in figure, there are two word clouds for the movie "Avengers Endgame" and the movie "The Dark Knight". we can respectively get the keywords from two word clouds and know the explanation of recommendation.
+
+---
+
+<!--建立用户5个需求level的tag cloud
+自我实现 Self-actualization:
+尊重 Esteem:
+社交需求 Social needs:
+安全需要 Safety needs:
+生理需要 Physiological needs:-->
+
+---
+
+Adaptation by trying to insert minority items 
+使系统具有推新功能
+好的推荐系统是既可以根据用户的反馈来推荐，也可以不断帮助用户进行探索，因为用户可能不具有某个领域内的知识，好的推荐系统还需承载帮助用户发现新事物的功能。长尾挖掘必然是推荐需要去完成的一件事，长尾作为大头的存在，分发过程中需要将把握，或者说长尾挖掘是好的推荐系统需要去完成的任务。
+
+---
+
+Adaptation based on several rounds of user feedback:
+
+这个方法的核心思想就是通过用户多轮次与推荐系统的交互，记录下每一轮的相关数据，上一轮的交互数据作为输入数据来训练并修改用户存储在系统中他的用户画像。
+
+The core idea of this method is to record the relevant data of each round when the user interacts with the recommendation system for multiple rounds. The previous round of interaction data is used as input data to train and modify the user's portrait of the user stored in the system.
+
+以不同推荐style的比例为例，我们可以建立这样一个adaptation rule：
+
+Taking the ratio of different recommended styles as an example, we can establish such an adaptation rule:
+
+	* 1
+		* average_score_of_sum,   __3__
+		* average_score_of_IUI,   __2__
+		* average_score_of_UIU,   __1__
+		* average_score_of_IUDD,  __4__
+		* average_score_of_UICC   __5__  content(director,genor,...)
+	
+	* 2  
+		* IUI + (average_score_of_IUI - average_score_of_sum) 
+		* UIU + (average_score_of_UIU - average_score_of_sum)
+		* IUDD + (average_score_of_IUDD - average_score_of_sum)
+		* UICC + (average_score_of_UICC - average_score_of_sum)
+		* if IUI or UIU or IUDD or UICC < 0, set it 0
+		* if new sum != 10, make the MAX(average_score_of_XXX)++
 
 
 

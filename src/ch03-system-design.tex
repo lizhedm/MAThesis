@@ -101,7 +101,7 @@ Item-based mainly uses users' historical interests to make recommendations. Reco
 \centering
 \includegraphics[width=0.5\textwidth]{neural_network_demographic_based}
 \end{figure}
-According to the basic information of the system user, find out the relevance of the user, and then make recommendations. At present, it is rarely used alone in large systems, and it is usually used in combination with other recommendation algorithms. The usual method is to classify the user based on the user's registration information, and then recommend to the user the items in the category to which she belongs. In this paper, we use gender, age and occupation of user as feature of demographic-based recommendation method.
+According to the basic information of the system user, find out the relevance of the user, and then make recommendations. At present, it is rarely used alone in large systems, and it is usually used in combination with other recommendation algorithms. The usual method is to classify the user based on the user's registration information, and then recommend to the user the items in the category to which he belongs. In this paper, we use gender, age and occupation of user as feature of demographic-based recommendation method.
 \item[(e)]\textbf{Content-Based}\\
 \begin{figure}[h]
 \caption{content-based recommendation strategy}
@@ -115,8 +115,58 @@ Based on the user's past browsing history, make recommendations to the user that
 
 \par For various reasons, it is easier to collect the user's past behavior than to collect user information, but CF-based (user-based and item-based) has it's limitations. When the scoring is very sparse, the prediction accuracy will be greatly reduced. And the cold start of new products is also a problem for CF. In general, therefore, most of today's recommendation systems use a hybrid recommendation method.
 \subsubsection{Recommendation Explanation Strategy}
+In the construction of UMNN, all connection methods are recorded while the user node and the movie node are connected. When the User Interface sends a movie id list and UMNN sends a recommended id list, the corresponding connection method is transmitted to the User Interface as part of the response data.
+\par We introduced the method for establishing a connection between the user node and the movie node in the Recommendation Style section. Each recommendation style can be relevant to a Recommendation Explanation Template.
+\\
+\begin{table}[h!]
+\centering
+
+\textbf{UserNode--MovieNode--UserNode}\\
+\textbf{MovieNode--UserNode--MovieNode}\\
+\textbf{DemographicFeature--UserNode--MovieNode}\\
+\textbf{UserNode--MovieNode--ContentFeature}\\
+
+\caption{Four connection methods}
+\label{table:1}
+\end{table}
+The four recommended methods corresponding to the four connection methods in \ref{table:1} are user-based, item-based, demographic-based, and content-based. Establish the explanation templates for these four recommendation styles in table \ref{table:2}.
+
+\begin{table}[h!]
+\renewcommand\arraystretch{1.5}
+\centering
+\begin{tabular}{p{80pt}p{120pt}p{100pt}p{120pt}}\toprule
+ \hline
+ Recommendation Style & Explanation Template & Data Template & Example \\ [0.5ex] 
+ \hline\hline
+ user-based & (uid\_1) is recommended with (iid\_1) because (uid\_2) is similar with (uid\_1) and (uid\_2) likes (iid\_1). & Uid\{uid-1\}-Iid\{iid1\}-Uid\{uid2\} & You are recommended with "Resurrection Man (1998)" because user 5183 is similar with you and user 5183 likes this movie.\\ 
+ item-based & (iid\_1) is recommended to (uid\_1) because (iid\_1) that is similar with (iid\_2) which (uid\_1) liked before. & Iid\{iid1\}-Uid\{uid-1\}-Iid\{iid2\} & "Woo (1998)" is recommended to you because that is similar with "Ice Storm (1997)" which you liked before. \\
+ demographic-based & (iid\_1) is recommended to (uid\_1) because (uid\_1)'s (DemographicFeatureType) is (DemographicFeatureValue). & Iid\{iid1\}-Uid\{uid-1\}-DFType\{type\}-DFValue\{value\} & "12 Monkeys (1995)" is recommended to you because your occupation is academic/educator. \\
+ content-based & content-based: (uid\_1) is recommend with (iid\_1) because (iid\_1)'s (ContentFeatureType) is (ContentFeatureValue) & Uid\{uid-1\}-Iid\{iid\}-CFType\{type\}-CFValue\{value\} & You are recommended with "Resurrection Man (1998)" because the genre of the movie is Crime.\\ [1ex] 
+ \hline
+\end{tabular}
+\caption{Explanation Template}
+\label{table:2}
+\end{table}
 \subsubsection{Recommendation Explanation Adaptation Strategy}
 %rule based
+The quality of a recommendation system usually requires an evaluation of the entire recommendation behavior, which runs through the user's whole interaction process. A recommendation system is good or not good, which is difficult to define. The algorithm is the core of the recommendation system, while a variety of other technologies and factors have a significant impact on personalized recommendations. The excellent recommendation system is a hybrid product of algorithms, various technics, and interaction designs.
+\par From the use of search engines when there is less information at the beginning of the Internet, to the use of recommendation systems after more information appears on the Internet, to the applied of interpretable recommendation systems that provide a better interactive experience, the way users obtain information is constantly improved and optimized. In this paper, we use the adaptation method, which was rarely studied in previous related papers, to further increase the interaction between the recommended content and the user, so that the user is more actively involved in the operation of the recommendation system, instead of as a simple message receiver. By allowing users to use our recommendation system multiple times, we collect the input of user behavior characteristics for each round as positive feedback to promote various aspects of the performance of the recommendation system.
+\par We find some available and reasonable recommendation explanation adaptation strategies: adaptation for the way of showing, adaptation by trying to insert minority items, adaptation based on several rounds of user feedback.
+\\
+\textbf{Adaptation for the way of showing:}\\
+Adapt the shown of the explanation. The original movie recommendation explanation of the system is an understandable sentence using natural language, but sometimes the user is not interested in the uniform text description, and it is not necessary for the user to receive all the text information in the recommendation explanation. From linguistics, we know that the user only needs to read a few keywords, In most cases, he can connect, arrange, extend and imagine the keywords to understand the meaning of recommendation explanation.
+\par We propose a possible solution for the adaptation view: use word cloud. We can combine the movie?s explanation content with the movie ?s metadata on wikipedia and OMDb. After doing some data processing, a word cloud can be generated. This word cloud could contain many important movie related tags or features. user can understand the reason for recommendation by the word cloud.
+\par As shown in figure, there are two word clouds for the movie "Avengers Endgame" and the movie "The Dark Knight". we can respectively get the keywords from two word clouds and know the explanation of recommendation.
+
+\begin{figure}[h]
+\caption{Cloud word}
+\centering
+\includegraphics[width=0.4\textwidth]{avengers_endgame_flim}
+\includegraphics[width=0.4\textwidth]{the_dark_knight_film}
+\end{figure}
+\textbf{Adaptation based on several rounds of user feedback:} \\
+The core idea of this method is to record the relevant data of each round when the user interacts with the recommendation system for multiple rounds. The previous round of interaction data is used as input data to train and modify the user's portrait of the user stored in the system.
+\par Taking the ratio of different recommended styles as an example, we can establish such an adaptation rule:
 
 \subsection{Machine Learning Algorithm}
 
