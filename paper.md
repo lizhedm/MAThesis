@@ -1,3 +1,7 @@
+## Introduction
+
+## Related Work
+
 ### Recommend System
 
 为什么要有推荐系统
@@ -51,7 +55,176 @@
 
 组合推荐。由于各种推荐方法都有优缺点，所以在实际中，组合推荐经常被采用。研究和应用最多的是内容推荐和协同过滤推荐的组合。最简单的做法就是分别用基于内容的方法和协同过滤推荐方法去产生一个推荐预测结果，然后用某方法组合其结果。
 
+---
 
+## System Design
+
+
+### MovieLens Dataset
+我们选用了来自Minnesota university的GroupLens Research 项目组的MovieLens数据集。MovieLens数据集是一个关于电影评分的数据集，里面包含了从IMDB上面得到的用户对电影的评分信息。在本论文中，我们使用MovieLens 1M数据集作为研究的数据源，其含有来自6000名用户对4000部电影的100万条评分数据。它分为三个表：电影评分、电影元数据（类型风格和年代）以及关于用户的人口统计学数据（年龄、邮编、性别和职业）。
+
+We use the MovieLens dataset from the GroupLens Research Group at the University of Minnesota. The MovieLens 1M dataset is used as the data source in this paper. It contains 1 million ratings of 4,000 movies from 6,000 users. It is divided into three tables: movie ratings, movie metadata (genre style and age), and demographic data about users (age, zip code, gender, and occupation).
+
+---
+
+### 4 Data Tracks
+
+图中从MovieLens出发的两个输出，分别提取出movie table和rating table作为movie module 的输入，以及user table 作为user module的输入。用户和电影，分别代表两个路径，表示的是当系统进入一个用户或一个内容的行为轨迹。本文把整个推荐系统按照业务路径分成3个部分，分别是用户数据轨迹、电影数据轨迹以及推荐生成轨迹，接下来分别介绍下每个环节。
+
+In the system architecture diagram. The two outputs from the MovieLens extract the movie table and rating table as the input of the movie module, and extract the user table as the input of the user module. The user and the movie, respectively, represent two paths, which represent the behavior trajectory when a user or a movie is entered in the system. This paper divides the entire recommendation system into four parts according to the business path, which are the user data track, movie data track, rating data track, and recommendation generation track. In the following paragraphs, we introduce each track separately.
+
+---
+
+用户轨迹方面，每次进来一名用户首先要判断这名用户是否是新用户，一旦发现是新用户将启动冷启动策略，系统会引导用户输入相关的个人信息（gender，age，occupation），然后从已有的电影数据中取出一系列top-N电影让用户选择他喜欢的电影，当选满N部电影后（在后续的prototype中，我们将N设置为10，以方便描述和测试）。系统将会以之前获得的用户个人信息和选择的N部他喜爱的电影作为输入构建用户画像，即图中的build user部分。如果用户不涉及到冷启动问题，则直接进入用户画像的构建流程，这部分用户数据是从MovieLens中user table获得的已有用户数据。综上所述，MovieLens中已有的user数据和新输入的用户数据，共同构成了系统整个的user database。
+
+In terms of user trajectory, each time a user comes in, it is necessary to determine whether the user is a new one. Once a new user is found, a cold start strategy will be initiated. The system will guide the user to enter relevant personal information (gender, age, occupation). Then take a series of top-N movies from the existing movie data and let the user choose some movies he likes. After selecting n movies (in the subsequent prototype, we set n to 10 for easy description and testing). The system will use the previously obtained personal information of the user and the selected n favorite movies as input to build a user portrait, that is, the "Build user" part in the system architecture diagram. If the user is not involved in the cold start problem, the user goes to the "Build User" process directly. This part of the user data is the existing user data obtained from the user table in MovieLens. In summary, the existing user data in MovieLens and newly entered user data constitute the entire user database of the system together.
+
+---
+
+对电影进行打标，标签分两种，分别是电影自身特征（name,genre,director,actor）以及电影在系统中的行为特征。
+
+There are two types of labeling for movies, which are the characteristics of the movie itself (name, genre, director, actor) and the behavior characteristics of the movie in the system.
+
+电影自身特征:
+Movie characteristics:
+
+电影自身的属性，不需要频繁更新，第一次输入系统后这些数据几乎不会改变也不需要更新。电影的所属类别，电影的上映时间这些数据可以从MovieLens中获得。
+
+The properties of the movie itself do not need to be updated frequently. These data will hardly change or need to be updated after the first input into the system. The genre of the movie and its release year can be retrieved from MovieLens.
+
+MovieLens的电影数据并不包含电影的director,actor,writer,poster等数据，为了获得更多有用的电影元数据，从而使我们将要构造的系统能有更丰富的信息和数据展示给user，我们使用了OMDb API这个第三方服务。通过每个电影的名字和年份作为查询输入，获得该电影的director,actor,writer,poster地址等数据。将整个movie table里的所有电影对应的新数据重新整合成为一个新的movie table，构成新的movie table的数据项是：iid,title,year,genre,director,actor,writer。新的movie table构成了上图中 movie database部分。
+
+The movie data of MovieLens does not include the director, actor, writer, poster and other data of the movie. In order to obtain more useful movie metadata, so that the system we are constructing can have richer information and data to show, we use OMDb API which is a third-party RESTful web service to get movie information. The name and year of each movie are used as query inputs to obtain the director, actor, writer, and poster addresses of the movie. The new data corresponding to all movies in the entire movie table is re-integrated into a new movie table. The data items constituting the new movie table are: (iid, title, year, genre, director, actor, writer). The new movie table constitutes the "Movie Database" part in the system architecture diagram.
+
+---
+
+_rating table: uid,iid,rating,timestamp,movie_count,user_count_
+
+_movie table: iid,title,year,genre,director,actor,writer_
+
+电影行为特征:movie behavior characteristics:
+
+电影行为特征指的是电影内容在系统中历史被点击、评分等信息。
+Movie behavior characteristics refer to information such as the movie being clicked and rated in the system.
+
+---
+
+当收集了电影内容以及用户特征后，就组成了内容总库以及用户总库，可以将这两个组件合并构建出模型训练集。将user database和movie database中的全部数据构造成如图所示的系统结构。rating table中的数据结构包含了某个用户对某部电影的评分，将rating table的数据作为user dataset到movie dataset的映射，将所有在rating table中有关系的user nodes 和movie nodes连接起来，连接user dataset和movie dataset的所有连线都具有weight值，其初始值设置为该user对该电影的评分。综上所述，最终构成了图中的训练集合UMNN。通过pytorch提供的一些机器学习算法，通过对UMNN进行多轮的训练后，获得一个拟合后带有新的weight值的UMNN。UMNN模型便是用来作为推荐系统的核心模块。当用户在User Interface选择N部他喜欢的电影后，User Interface将用户选择的电影id list作为输入传送给UMNN，UMNN会将推荐的id list传送给User Interface，最终User Interface显示出推荐movie id list 对应的 所有movie的信息。
+
+When the movie and user characteristics are collected, the "Movie Database" and the "User Database" are formed. These two components can be combined to build a model training set. All data in user database and movie database are structured as shown in the figure. The data structure in the rating table contains someone user's rating of someone movie. The data of the rating table is used as a mapping from the user dataset to the movie dataset. All user nodes and movie nodes that are related in the rating table are connected. All connections in the user dataset and movie dataset have weight values, and their initial value is set to the user's rating of the movie. In summary, the training set UMNN in the system architecture diagram is finally molded. With some machine learning algorithms provided by pytorch, by multiple rounds of training on UMNN, a UMNN with a series of new weights after fitting is constructed. The UMNN model is used as the core module of the recommendation system. When the user selects N movies he likes in the User Interface, the User Interface sends the selected movie id list as input to the UMNN, and the UMNN sends the recommended id list to the User Interface, and the User Interface finally shows the recommended movies' Information.
+
+---
+
+### UMNN
+
+---
+
+### Frontend and Backend
+
+Flask是由Python实现的一个web微框架，微框架中的“微”是指Flask旨在保持代码简洁且易于扩展，让我们可以使用Python语言快速实现一个网站或Web服务。它是目前十分流行的web框架，采用Python编程语言来实现相关web服务。主要基于 Werkzeug 和 Jinja 的轻量 WSGI Web 程序框架，Flask框架的主要特征是核心构成比较简单，但具有很强的扩展性和兼容性，程序员可以使用Python语言快速实现一个网站或Web服务。
+
+Flask is a web micro-framework implemented by Python. The "micro" means that Flask aims to keep the code concise and easy to extend, allowing developers to quickly implement a website or web service using the Python language. It is currently a very popular web framework that uses the Python programming language to implement related web service. Based on Werkzeug and Jinja's lightweight WSGI web application framework, the main feature of the Flask framework is that the core structure is relatively simple, but has strong extensibility and compatibility. Programmers can use Python to quickly implement a website or web service.
+
+---
+
+和其他的轻量级框架相比较，Flask框架有很好的扩展性，拥有灵活的Jinja2模板引擎，提高了前端代码的复用率,这是其他Web框架不可替代的. 实际上，前端和后端的开发可以在Flask中用python语言一次性开发，Flask提供的template和route模块，分别充当了传统网络架构中前后端的功能。我们使用sqlite3轻量数据库来存储一些需要持久保存的数据，整个前后端以及数据库的架构非常的轻量简洁，如图所示。
+
+Compared with other lightweight web frameworks, the Flask framework has good extensibility, has a flexible Jinja2 template engine, and improves the reuse rate of frontend code. This is irreplaceable by other web frameworks. In fact, the frontend and Backend development can be done in Flask with Python at one time. The template and route modules provided by Flask serve as the frontend and backend functions in the traditional network architecture. We use sqlite3 lightweight database to store some data that needs to be persisted. The entire frontend and backend and database architecture is very lightweight and concise, as shown in the figure.
+
+---
+
+在我们的整个系统中，基于机器学习的算法和数据处理操作的开发语言也是Python，这也是我们选择了可以用python作为开发语言来开发前端网页的Flask框架的原因之一。整个系统统一开发语言，这使得整个开发和后期维护变得非常的方便以及层次清晰。
+
+In our entire system, the development language for machine learning algorithms and data processing operations is also Python, which is one of the reasons we chose it as the web development language and the Flask framework as the web framework. The entire system is developed by a unified language, which makes the whole development and later maintenance extremely convenient and clear.
+
+---
+
+Flask的基本模式为在程序里将一个视图函数分配给一个URL，每当用户访问这个URL时，系统就会执行在route模块该URL绑定好的视图函数，获取函数的返回值并将其显示到浏览器上，通常情况下这个返回值是已经解析好的html代码，其工作过程见图。
+
+The basic operating mode of Flask is to assign a view function to a URL in the program. Whenever a user accesses this URL, the system will execute the view function bound to the URL in the route module, obtain the return value of the function, and display it on the browser. Usually this return value is the parsed html code. its working process is shown in the figure.
+
+---
+
+Web Server Gateway Interface（Web服务器网关接口，WSGI）已被用作Python Web应用程序开发的标准。 WSGI是Web服务器和Web应用程序之间通用接口的规范。
+
+Werkzeug是一个WSGI工具包，它实现了请求，响应对象和实用函数。 这使得能够在其上构建web框架。 Flask框架使用Werkzeug作为其基础之一。
+
+jinja2是Python的一个流行的模板引擎。Web模板系统将模板与特定数据源组合以呈现动态网页。
+
+The Web Server Gateway Interface (WSGI) has been used as a standard for Python web application development. WSGI is a specification for a common interface between a web server and a web application.
+
+Werkzeug is a WSGI toolkit that implements requesting service, responding objects, and building some utility functions. It makes that possible to build web frameworks on top of it. The Flask framework embeds Werkzeug as one of its foundations.
+
+Jinja2 is a popular template engine for Python. The web template module combines templates with specific data sources to render dynamic web pages.
+
+---
+
+### Cold Start
+
+从一个海量库存的内容库中，推荐系统基于用户当前上下文信息以及过去的行为给用户推荐可能喜欢的商品。如果一个用户的过去行为是空，也就是这个用户还没有过去的行为被系统记录，或者他根本就是一个新用户。这种情况下就会产生 cold start problem。
+
+From a massive content library, the recommendation system recommends products that the user may like based on the user's current context information and past behavior. If a user's past behavior is empty, that is, the user's past behavior has not been recorded by the system, or he is simply a new user. A cold start problem occurs in this case.
+
+---
+
+电影推荐系统的cold start problem可以分类为new user cold start problem和new item cold start problem。
+
+new user cold start problem：缺乏新用户的用户信息数据，缺乏人与电影的交互记录也就是访问点击和评分记录
+
+new item cold start problem：也就是新电影加入系统后，由于缺乏访问的次数，会导致推荐不准确，甚而影响新条目获得推荐的几率，进而继续影响新条目的访问，造成负反馈。这样会导致一个流行偏见问题（popularity bias），原本受欢迎的电影获得大部分的推荐机会更受欢迎，新加入的访问记录较少的电影获得推荐的可能性更低。
+
+The cold start problem of the movie recommendation system can be classified into new user cold start problem and new item cold start problem.
+
+new user cold start problem: lack of personal information data for new users, lack of records of people's interaction with movies, that is, visit clicks and ratings data.
+
+new item cold start problem: After the new movie is added to the system, due to the lack of visits, the recommendation will be inaccurate, even affects the chances of new items being recommended, and then continue to affect the access to new items, resulting in negative feedback. This will lead to a popularity bias problem. Movies that were originally popular are more likely to get most recommendations, and movies that have fewer new visits are less likely to be recommended.
+
+---
+
+我们的系统数据来自MovieLens，在movie数据这一部分可以直接输入MovieLens的movie数据到系统，所以本文中不涉及到new item cold start problem。在user数据这一部分，同样可以使用MovieLens的user数据作为启动数据的来源，只有在新用户使用系统时需要冷启动策略来输入数据，具体的步骤在之前的章节已经有过介绍。新用户需要输入相关的个人信息（性别，年龄，职业），并从一系列排名前N的电影中选择自己喜欢的电影。 在选择过程完成之后，输入先前获得的个人信息和所选择的n个喜欢的电影以建立用户肖像。
+
+Our system data comes from MovieLens. For the part of movie data, the movie data from MovieLens can be directly inputted into the system, so this paper does not involve the new item cold start problem. About the user data part, the user data in MovieLens can be used as the source of startup data. Only when a new user uses this system, a cold start strategy is needed. The specific steps have been described in the previous section. To summarize, the new user needs to enter relevant personal information (gender, age, occupation) and choose some movies he likes from a series of top-N movies. After the selecting procedure is completed, the previously obtained personal information and the selected n favorite movies are inputted to build a user portrait.
+
+---
+
+解决cold start problem的方法通常是获得新用户的demographic data，以及引导用户与系统交互并记录用户行为，然后把用户行为属性映射到属性空间中，这样就能把新用户与老用户关联起来。也就是新的user node与movie dataset中的某一些movie node产生关联，进而也同时通过这些movie nodes与UMNN中原有的user nodes产生间接关联。
+
+The method to solve the cold start problem is usually to obtain the demographic data of the new user, guide the user to interact with the system, record the user behavior, and then map the user behavior attributes to the attribute space. So that the new user can be associated with the existing user. That is, the new user node is associated with some movie nodes in the movie dataset, and at the same time, the new user node is indirectly associated with the existing user nodes in the UMNN by these movie nodes.
+
+---
+
+解决cold start problem时，通常要注意两个个问题。
+
+When addressing cold-start issues, there are usually two problems to be aware of.
+
+第一个难题是在冷启动推荐中的用户行为产生的数据具有稀疏的属性。在大型应用系统中，用户需要与海量的商品进行交互，对于一个特定的用户，在系统中只有很少的交互行为，与商品项之间的交互可能会更少。因此用户-商品的矩阵会非常的稀疏。针对稀疏矩阵稀疏性的处理，可以构造更为有效的数据结构，压缩稀疏行和列，或者通过PCA、SVD等方法来进行降维。
+
+The first problem is that the data generated by user behavior, in cold start process, has sparse attributes. In large-scale application systems, users need to interact with a large number of items. For a specific user, there are only few interactions in the system, and the interaction with the item may be even less. So the user-item matrix will be very sparse. To deal with the sparseness of matrices, we can construct more efficient data structures, compress sparse rows and columns, or reduce dimensions through methods such as PCA and SVD.
+
+---
+
+第二个难题是效率问题，推荐系统是一个在线系统，需要具有即时性和瞬间反馈的能力，用户不希望也不接受过长的等待和过多无用的交互。我们希望引导用户进行尽量少但是足够的操作来获得尽量多而且有效的用户行为数据。既不会因为繁琐冗余的操作使用户产生不好的交互体验，又能够快速准确的构建出用户的行为画像。
+
+The second problem is efficiency. The recommendation system is an online system. It needs the ability of immediateness and instant feedback. The user does not want or accept long waits and too many useless interactions. We want to guide users through as few as possible but sufficient operations to obtain as much and as effective user behavior data as possible. It will not cause users to have a bad interactive experience because of tedious and redundant operations, but also can quickly and accurately construct user behavior portraits.
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Experiment
 ### 评估
 
 #### 用户满意度
@@ -97,56 +270,3 @@ TopN预测主要是用召回率和准确率来进行衡量。
 #### 健壮性
 
 推荐系统抗击作弊的能力。
-
-## Experiment
-
-### Data Set
-我们选用了来自Minnesota university的GroupLens Research 项目组的MovieLens数据集。MovieLens数据集是一个关于电影评分的数据集，里面包含了从IMDB上面得到的用户对电影的评分信息。在本论文中，我们使用MovieLens 1M数据集作为研究的数据源，其含有来自6000名用户对4000部电影的100万条评分数据。它分为三个表：电影评分、电影元数据（类型风格和年代）以及关于用户的人口统计学数据（年龄、邮编、性别和职业）。
-
-We use the MovieLens dataset from the GroupLens Research Group at the University of Minnesota. The MovieLens 1M dataset is used as the data source in this paper. It contains 1 million ratings of 4,000 movies from 6,000 users. It is divided into three tables: movie ratings, movie metadata (genre style and age), and demographic data about users (age, zip code, gender, and occupation).
-
----
-
-图中从MovieLens出发的两个输出，分别提取出movie table和rating table作为movie module 的输入，以及user table 作为user module的输入。用户和电影，分别代表两个路径，表示的是当系统进入一个用户或一个内容的行为轨迹。本文把整个推荐系统按照业务路径分成3个部分，分别是用户数据轨迹、电影数据轨迹以及推荐生成轨迹，接下来分别介绍下每个环节。
-
-In the system architecture diagram. The two outputs from the MovieLens extract the movie table and rating table as the input of the movie module, and extract the user table as the input of the user module. The user and the movie, respectively, represent two paths, which represent the behavior trajectory when a user or a movie is entered in the system. This paper divides the entire recommendation system into four parts according to the business path, which are the user data track, movie data track, rating data track, and recommendation generation track. In the following paragraphs, we introduce each track separately.
-
----
-
-用户轨迹方面，每次进来一名用户首先要判断这名用户是否是新用户，一旦发现是新用户将启动冷启动策略，系统会引导用户输入相关的个人信息（gender，age，occupation），然后从已有的电影数据中取出一系列top-N电影让用户选择他喜欢的电影，当选满N部电影后（在后续的prototype中，我们将N设置为10，以方便描述和测试）。系统将会以之前获得的用户个人信息和选择的N部他喜爱的电影作为输入构建用户画像，即图中的build user部分。如果用户不涉及到冷启动问题，则直接进入用户画像的构建流程，这部分用户数据是从MovieLens中user table获得的已有用户数据。综上所述，MovieLens中已有的user数据和新输入的用户数据，共同构成了系统整个的user database。
-
-In terms of user trajectory, each time a user comes in, it is necessary to determine whether the user is a new one. Once a new user is found, a cold start strategy will be initiated. The system will guide the user to enter relevant personal information (gender, age, occupation). Then take a series of top-N movies from the existing movie data and let the user choose some movies he likes. After selecting n movies (in the subsequent prototype, we set n to 10 for easy description and testing). The system will use the previously obtained personal information of the user and the selected n favorite movies as input to build a user portrait, that is, the "Build user" part in the system architecture diagram. If the user is not involved in the cold start problem, the user goes to the "Build User" process directly. This part of the user data is the existing user data obtained from the user table in MovieLens. In summary, the existing user data in MovieLens and newly entered user data constitute the entire user database of the system together.
-
----
-
-对电影进行打标，标签分两种，分别是电影自身特征（name,genre,director,actor）以及电影在系统中的行为特征。
-
-There are two types of labeling for movies, which are the characteristics of the movie itself (name, genre, director, actor) and the behavior characteristics of the movie in the system.
-
-电影自身特征:
-Movie characteristics:
-
-电影自身的属性，不需要频繁更新，第一次输入系统后这些数据几乎不会改变也不需要更新。电影的所属类别，电影的上映时间这些数据可以从MovieLens中获得。
-
-The properties of the movie itself do not need to be updated frequently. These data will hardly change or need to be updated after the first input into the system. The genre of the movie and its release year can be retrieved from MovieLens.
-
-MovieLens的电影数据并不包含电影的director,actor,writer,poster等数据，为了获得更多有用的电影元数据，从而使我们将要构造的系统能有更丰富的信息和数据展示给user，我们使用了OMDb API这个第三方服务。通过每个电影的名字和年份作为查询输入，获得该电影的director,actor,writer,poster地址等数据。将整个movie table里的所有电影对应的新数据重新整合成为一个新的movie table，构成新的movie table的数据项是：iid,title,year,genre,director,actor,writer。新的movie table构成了上图中 movie database部分。
-
-The movie data of MovieLens does not include the director, actor, writer, poster and other data of the movie. In order to obtain more useful movie metadata, so that the system we are constructing can have richer information and data to show, we use OMDb API which is a third-party RESTful web service to get movie information. The name and year of each movie are used as query inputs to obtain the director, actor, writer, and poster addresses of the movie. The new data corresponding to all movies in the entire movie table is re-integrated into a new movie table. The data items constituting the new movie table are: (iid, title, year, genre, director, actor, writer). The new movie table constitutes the "Movie Database" part in the system architecture diagram.
-
----
-
-_rating table: uid,iid,rating,timestamp,movie_count,user_count_
-
-_movie table: iid,title,year,genre,director,actor,writer_
-
-电影行为特征:movie behavior characteristics:
-
-电影行为特征指的是电影内容在系统中历史被点击、评分等信息。
-Movie behavior characteristics refer to information such as the movie being clicked and rated in the system.
-
----
-
-当收集了电影内容以及用户特征后，就组成了内容总库以及用户总库，可以将这两个组件合并构建出模型训练集。将user database和movie database中的全部数据构造成如图所示的系统结构。rating table中的数据结构包含了某个用户对某部电影的评分，将rating table的数据作为user dataset到movie dataset的映射，将所有在rating table中有关系的user nodes 和movie nodes连接起来，连接user dataset和movie dataset的所有连线都具有weight值，其初始值设置为该user对该电影的评分。综上所述，最终构成了图中的训练集合UMNN。通过pytorch提供的一些机器学习算法，通过对UMNN进行多轮的训练后，获得一个拟合后带有新的weight值的UMNN。UMNN模型便是用来作为推荐系统的核心模块。当用户在User Interface选择N部他喜欢的电影后，User Interface将用户选择的电影id list作为输入传送给UMNN，UMNN会将推荐的id list传送给User Interface，最终User Interface显示出推荐movie id list 对应的 所有movie的信息。
-
-When the movie and user characteristics are collected, the "Movie Database" and the "User Database" are formed. These two components can be combined to build a model training set. All data in user database and movie database are structured as shown in the figure. The data structure in the rating table contains someone user's rating of someone movie. The data of the rating table is used as a mapping from the user dataset to the movie dataset. All user nodes and movie nodes that are related in the rating table are connected. All connections in the user dataset and movie dataset have weight values, and their initial value is set to the user's rating of the movie. In summary, the training set UMNN in the system architecture diagram is finally molded. With some machine learning algorithms provided by pytorch, by multiple rounds of training on UMNN, a UMNN with a series of new weights after fitting is constructed. The UMNN model is used as the core module of the recommendation system. When the user selects N movies he likes in the User Interface, the User Interface sends the selected movie id list as input to the UMNN, and the UMNN sends the recommended id list to the User Interface, and the User Interface finally shows the recommended movies' Information.
