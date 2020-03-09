@@ -159,14 +159,34 @@ Adapt the shown of the explanation. The original movie recommendation explanatio
 \par As shown in figure, there are two word clouds for the movie "Avengers Endgame" and the movie "The Dark Knight". we can respectively get the keywords from two word clouds and know the explanation of recommendation.
 
 \begin{figure}[h]
-\caption{Cloud word}
+\caption{Word cloud}
 \centering
 \includegraphics[width=0.4\textwidth]{avengers_endgame_flim}
 \includegraphics[width=0.4\textwidth]{the_dark_knight_film}
 \end{figure}
 \textbf{Adaptation based on several rounds of user feedback:} \\
-The core idea of this method is to record the relevant data of each round when the user interacts with the recommendation system for multiple rounds. The previous round of interaction data is used as input data to train and modify the user's portrait of the user stored in the system.
-\par Taking the ratio of different recommended styles as an example, we can establish such an adaptation rule:
+\par The core idea of this method is to record the relevant data of each round when the user interacts with the recommendation system for multiple rounds. The previous round of interaction data is used as input data to train and modify the user's portrait of the user stored in the system.
+\par Taking the ratio of different recommended styles as an example, we can establish an adaptation rule:
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwResult{propotion }
+  \[ \bar{score}(Sum) = \frac{\sum_{i=0}^{n}rating_{i}}{n} \] \
+  \[ \bar{score}(IUI) = \frac{\sum_{i\in IUI}rating_{i}}{|IUI|} \] \
+  \[ \bar{score}(UIU) = \frac{\sum_{i\in UIU}rating_{i}}{|UIU|} \] \
+  \[ \bar{score}(IUDD) = \frac{\sum_{i\in IUDD}rating_{i}}{|IUDD|} \] \
+  \[ \bar{score}(UICC) = \frac{\sum_{i\in UICC}rating_{i}}{|UICC|} \] \
+ \While{\[ count_{sum}==10 \]}{
+  \[ count_{IUI}  \mathrel{+}= func_{propotion}(\bar{score}(IUI)-\bar{score}(sum)) \] \
+  \[ count_{UIU}  \mathrel{+}= func_{propotion}(\bar{score}(UIU)-\bar{score}(sum)) \] \
+  \[ count_{IUDD}  \mathrel{+}= func_{propotion}(\bar{score}(IUDD)-\bar{score}(sum)) \] \
+  \[ count_{UICC}  \mathrel{+}= func_{propotion}(\bar{score}(UICC)-\bar{score}(sum)) \] \
+  \If{\[ count_{x} < 0 \]}{
+    \[ count_{x} = 0 \] \
+   }
+ }
+ \caption{Adaptation rule algorithm}
+\end{algorithm}
 
 \subsection{Machine Learning Algorithm}
 
@@ -176,15 +196,74 @@ PyTorch\cite{ketkar2017introduction} and TensorFlow\cite{abadi2016tensorflow} ar
 
 \subsubsection{Neural Network Model}
 %node and item
+\subsubsection{Algorithm}
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwResult{ \[ P_{v_{1}} \] \[ \hat{r} \] }
+
+\[
+P_{v_{1}} = \begin{bmatrix}
+ genre & actor  & ... & ... & ... \\ 
+ ... & ...  & ... & ... & ... \\ 
+ I_{1}& I_{2} & I_{x} & ... & ... \\ 
+ V_{1} & V_{1}  & V_{1}  & V_{1} & ...
+\end{bmatrix}
+\ \ \ \ L_{P}\times N_{P}
+\]
+\[
+L_{P} : Length \ of \ Path
+\]
+\[
+N_{P} : Count \ of \ Path
+\]
+\[
+\left\{\begin{matrix}
+\\ P_{1} = f_{path-encoder} (V_{genres},V_{I_{1}},V_{1})
+\\ ...
+\\ ...
+\\ P_{N_{P}} = f_{path-encoder} (V_{director},V_{I_{N}},V_{1})
+
+\end{matrix}\right.
+\]
+\[
+att_{p_{1}} = \frac{e^{P_{1} \cdot A^{T}}}{e^{sig(p_{1}\cdot A^{T})}  +  e^{sig(p_{2}\cdot A^{T})}  + \cdot \cdot \cdot +e^{sig(p_{N_{P}}\cdot A^{T})}}
+\]
+\[
+hv_{1} =  \sum_{i=1}^{N_{P}} att_{i}\cdot P_{i}
+\]
+\[
+\hat{r} = h_{user}\cdot h_{att}^{T}
+\]
+ 
+\caption{Path Generated Algorithm}
+\end{algorithm}
+
 \subsubsection{Training Weights}
 
 
 \subsection{User Interface Prototype} 
 
-\subsubsection{Development Tool and Language}
-\subsubsection{Prototype}
-\subsubsection{}
+\textbf{UI flow:}\\
+In general, the UI flow is basically the same as the user data track in the system architecture diagram. Therefore, we can analyze the input and output data flow and its logical flow required by the prototype system according to the user data track, and design corresponding modules based on the functions required by the system.\\
+\textbf{Prototype:}\\
+The user interface prototype is designed as shown in figure \ref{figure:12}.
 
-\subsection{}
+\begin{figure}[h]
+\caption{User interface prototype}
+\label{figure:12}
+\centering
+\includegraphics[width=0.8\textwidth]{prototype}
+\end{figure}
+\leavevmode\\
+Explanation page: Some explanations about the User Study \\
+User information page: For inputing personal data, like user id, gender, age and occupation.\\
+User background page: The user will be asked about some background questions, like, how many does he know about Explainable Recommendation System?\\
+Movie preview page: For building User Portraits, system will give user a series of movie posters and names. user can click to select the movies he likes from 6 options (selecting multiple, selecting none in 6 options and selecting all 6 options are allowed). Click the 'REFRESH' button to load the new 6 options. Repeat this selection process until the user has selected a total of 10 movies. \\
+Recommendation round 1: The system will give user a series of recommendation movies and the explanations why these are recommended to the user. The user can click to select the movies he likes and give a score for the explanations. \\
+Recommendation round 2: Same with Recommendation Round One, but the new recommendation movies are based on the user's choices and scores in Recommendation Round One. \\
+Recommendation round 3: Same with Recommendation Round One and Two, but the new recommendation movies are based on the user's choices and scores in Recommendation Round Two. \\
+User feedback page : The user's opinion about recommendation in the 3 test rounds.
+
 
 \cleardoublepage
