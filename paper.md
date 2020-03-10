@@ -1,3 +1,4 @@
+
 ## Introduction
 
 ## Related Work
@@ -404,3 +405,22 @@ question 17
 #### 健壮性
 
 推荐系统抗击作弊的能力。
+
+---
+
+这说明，在我们20人的user study样本空间中。测试者通过三轮的explanation adaptation，平均的评分提升了。
+
+This shows that in our user study, the average score of users improved through three rounds of explanation adaptation.
+
+#### Accuracy
+对比关于accuracy的3个问题：Q7，Q9和Q10，我们可以发现一个非常有趣的现象。有部分user表示推荐系统推荐了正确的电影给他们，但是他们却认为推荐系统并没有推荐他们真正期待和想要的电影。
+
+Comparing the three questions about accuracy ( Q7, Q9, Q10), we can find a very interesting phenomenon. Some users said that the recommendation system recommended the right movies to them, but they thought that the recommendation system did not recommend the movies they really expected and needed.
+
+---
+
+大多数推荐系统，包括我们的推荐系统，都往往是基于一些数据和记录来推荐用户可能感兴趣的事物，这当然是正确的推荐，但有些时候这种推荐可能并不是用户真正期待和需求的。推荐的事物只满足了用户的physiological needs, safety needs, social needs。而更高层次的esteem and self-actualization needs可能会成为未来推荐系统可能的发展发向之一。
+
+Most recommendation systems, including our recommendation system, often recommend things that users may be interested in based on some data and records. This is certainly the right recommendation, but sometimes it may not be what users really expect and demand. The recommended things only satisfy the user's physiological needs, safety needs, and social needs. And higher-level esteem and self-actualization needs may become one of the possible development directions of future recommendation systems research area.
+
+---
