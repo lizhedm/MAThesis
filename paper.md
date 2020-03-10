@@ -342,17 +342,22 @@ Taking the ratio of different recommended styles as an example, we can establish
 
 ## Experiment
 ### 评估
+system evaluation
 
-#### 用户满意度
+
+#### 用户满意度 
+satisfaction
 
 点击率，用户停留时长，转化率等指标。
 question 8.
 
 #### 预测准确度
+accuracy
 
 question 9. 10. 
 
 #### adaptation有效性
+adaptation effectiveness
 question (11.12.13)
 
 分为评分预测和TopN预测。
@@ -368,21 +373,25 @@ TopN预测主要是用召回率和准确率来进行衡量。
 推荐系统能够推荐出来的物品，占总物品集合的比例。
 
 #### 多样性
+Diversity
 question 14
 
 描述的是推荐列表中物品两两之间的不相似性，希望尽可能多的覆盖用户的兴趣点。
 
 #### 新颖性
+Novelty
 question 15
 
 给用户推荐那些他们以前没有见过的东西。
 
 #### 惊喜度
+Surprise
 question 16
 
 给用户的推荐结果是和用户历史上喜欢的物品不相似，但用户却又觉得满意的推荐。
 
 #### 信任度
+Trust
 question 17
 增加推荐系统的透明度，让用户知道推荐的理由。
 
