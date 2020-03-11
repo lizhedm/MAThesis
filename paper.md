@@ -1,13 +1,9 @@
 
 ## Introduction
 
-## Related Work
-
-### Recommend System
-
 为什么要有推荐系统
 
-先来回顾一下互联网诞生到目前为止，我们寻找信息方式的变化历程…
+回顾一下互联网诞生到目前为止，我们寻找信息方式的变化历程…
 
 最早期的时候，信息是比较稀缺的，那个时候信息比较分散，寻找的效率较低，主要是人找信息。
 
@@ -32,6 +28,60 @@
 对用户而言，能够发现自己感兴趣的东西，提升用户体验；
 对物品而言，能够发掘长尾物品的利用效率，盘活整体资源；
 对平台而言，能够获取用户价值和商业价值。
+
+### 为什么值得研究？
+
+我们可以将人与Internet产生交互的场景分为三种情况：
+(a)人主动使用搜索引擎查询信息,Internet根据用户搜索的内容，产生相应的搜索结果并按照某种组织结构将这个结果返回呈现出来，这个Information的体量是非常庞大和复杂的。人阅读这个Information I，并在其中尝试找到自己需要的information i，（i属于I），将其提取出来。
+(b)人输入一些信息，Internet通过推荐系统输出一些推荐，并从巨大的信息流中选取用户需要的小部分信息，发送给用户。
+(c)推荐引擎主动搜索与它要推荐内容相匹配的受众以及收集Internet上用户无意识行为产生的数据并进行分析和推荐匹配。推荐引擎会主动的产生信息并将其推荐给相应的人。举例来说，一个顾客在Amazon上购买过某一件商品x，几天后，他在Youtube上观看视频，突然发现视频播放之前的广告是由商品x的生产企业投放的，广告内容是向他推荐与商品x类似的另一个商品y。这就是（c）交互场景简单出现在我们生活中的方式之一。未来推荐引擎基于（c）场景与人的交互方式和途径将会更加的自然和多样性。
+
+众所周知，谷歌和百度等等这些互联网巨鳄企业正是在早期依托搜索引擎技术优势，快速成长为互联网行业的巨型公司。如今的互联网技术和计算科学发展，使信息的产生和传递速度越来越快，体量越来越大，推荐系统在人们与Internaet的交互中扮演着非常重要和不可替代的作用，就如同图（b）中所描述的那样。但另一方便我们可以看到推荐引擎还有很大的发展潜力来达到和搜索引擎同等量级的重要性，就如图（c）所描述的。本文在推荐系统的explanation 和adaptation等方面做了一些有价值的研究和探索。
+
+---
+
+Neural network has a pivotal role in recommend system and we use it to build a User-Movie-Neural-Network.
+
+The "explanation" has long been a question of great interest in a wide range of fields about a recommendation system.
+
+
+---
+
+### 前人研究的不足
+
+__Explaining the inadequacies of previous studies__
+
+### 确定先前缺乏的研究
+
+__Identifying the paucity or lack of previous research__
+
+
+### 这篇论文研究什么问题
+
+说明简短论文的重点，目的或论点
+
+__Stating the focus, aim, or argument of a short paper__
+
+### 说明当前研究的目的
+
+__Stating the purpose of the current research__
+
+### 描述当前研究的局限性
+
+__Describing the limitations of the current study__
+
+
+### 概述论文或论文的结构
+__Outlining the structure of the paper or dissertation__
+
+### 这篇文章的贡献
+从Internet发展的历史过程上，思考了人与互联网络的交互方式的分类，并探讨了与搜索引擎同等量级在未来具有很大发展前景和潜力的推荐引擎研究方向。
+
+## Related Work
+
+### Recommend System
+
+
 
 ---
 
