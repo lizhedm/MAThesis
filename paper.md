@@ -3,25 +3,41 @@
 
 为什么要有推荐系统
 
-回顾一下互联网诞生到目前为止，我们寻找信息方式的变化历程…
+回顾一下互联网诞生到目前为止我们寻找信息方式的变化历程。最早期的时候信息是比较稀缺的，信息比较分散导致寻找的效率较低，信息传递的主要方式是人找信息。后来信息逐渐丰富起来了，有些人或者公司专门把各种信息聚集在一个网址，人们可以通过类目导航进行查找。
 
-最早期的时候，信息是比较稀缺的，那个时候信息比较分散，寻找的效率较低，主要是人找信息。
+Review the changes in the way we look for information so far since the birth of the Internet. In the earliest days, information was scarce. The scattered information led to low efficiency of searching. The main method of information transmission was that people looking for information. Later, the information has gradually been enriched. Some people or companies have gathered kinds of information on some websites, and people can search through the category navigation.
 
-后来信息逐渐丰富起来了，有些人或者公司专门把各种信息聚集在一个地方，人们可以通过类目导航进行查找，典型的公司是三大门户。
+---
 
-再后来信息量越来越大，人工添加的类目已经不能覆盖所有信息了，于是诞生了另外一种信息获取方式——搜索，典型的公司是Google、百度。
+伴随着信息量越来越大，人工添加的类目已经不能覆盖所有信息了，于是诞生了另外一种信息获取方式——搜索，典型的公司是Google、百度。
 
-再再后来，人与信息的关系从单向的人找信息演变成了现在的双向关系，人在海量的信息中找着自己需要的东西，同时海量的信息也在找合适的人。
+With the increasing amount of information, artificially added categories can no longer cover all information, so another type of information acquisition way - search, is born. Typical companies are Google and Baidu.
 
-从这个演化过程中，我们可以看到推荐系统的出现有两个重要的前提，一个是信息过载，一个是需求不明确。随着当今技术的飞速发展，数据量也与日俱增，人们越来越感觉在海量数据面前束手无策。正是为了解决信息过载(Information overload)的问题，人们提出了推荐系统（与搜索引擎对应，人们习惯叫推荐系统为推荐引擎）。
+---
 
-搜索引擎更倾向于人们有明确的目的，可以将人们对于信息的寻求转换为精确的关键字，然后交给搜索引擎最后返回给用户一系列列表，用户可以对这些返回结果进行反馈，并且是对于用户有主动意识的，但它会有马太效应的问题，即会造成越流行的东西随着搜索过程的迭代会越流行，使得那些越不流行的东西石沉大海。
+通信技术和数据科学的发展，人与信息的关系从单向的人找信息演变成了现在的双向关系，人在海量的信息中找到自己需要的东西，同时海量的信息也在找与之匹配的受众。
 
-而推荐引擎更倾向于人们没有明确的目的，或者说他们的目的是模糊的，通俗来讲，用户连自己都不知道他想要什么，这时候正是推荐引擎的用户之地，推荐系统通过用户的历史行为或者用户的兴趣偏好或者用户的人口统计学特征来送给推荐算法，然后推荐系统运用推荐算法来产生用户可能感兴趣的项目列表，同时用户对于搜索引擎是被动的。其中长尾理论（人们只关注曝光率高的项目，而忽略曝光率低的项目）可以很好的解释推荐系统的存在，试验表明位于长尾位置的曝光率低的项目产生的利润不低于只销售曝光率高的项目的利润。推荐系统正好可以给所有项目提供曝光的机会，以此来挖掘长尾项目的潜在利润。
+With the development of communication technology and data science, the relationship between people and information has evolved from one-way people looking for information to the current two-way relationship. People find what they need in massive amounts of information, and at the same time, massive amounts of information are also find ways to matching with the audience.
 
-数量有限的情况下根本不需要推荐，用户自己就能浏览完所有的物品。再往后发展，数量级不大的情况下，人工干预就可以解决，当人工干预也无法解决时，这个时候就需要推荐系统了。
+---
 
-当用户需求比较明确的时候，用户会倾向于使用搜索，需求不太明确时，基于用户历史的一些行为和偏好给用户推荐一些东西能让用户先留下来，在逛的过程中可能就产生了一些新的诉求。
+从这个演化过程中，我们可以看到推荐系统的出现有两个重要的前提，一个是信息过载，一个是需求不明确。随着当今技术的飞速发展，数据量也与日俱增，人们越来越感觉在海量数据面前束手无策。正是为了解决信息过载(Information overload)的问题，人们提出了推荐系统，与搜索引擎对应，也可以称呼推荐系统为推荐引擎。
+
+<!--need to be fixed-->
+
+From this evolutionary process, we can see that the emergence of recommendation systems has two important prerequisites, one is information overload, and the other is ambiguous requirements. With the rapid development of today's technology and the increasing amount of data, people feel more and more helpless in the face of massive data. In order to solve the problem of information overload, the computer scientists have proposed a recommendation system, which corresponds to a search engine and can also be referred to as a recommendation engine.
+
+---
+
+搜索引擎要求人们有明确的目的，可以将人们对于信息的寻求转换为精确的关键字，然后交给搜索引擎最后返回给用户一系列列表，用户可以对这些返回结果进行反馈。但它会有马太效应的问题，即会造成越流行的东西随着搜索过程的迭代会越流行，使得那些越不流行的东西石沉大海。
+
+Search engines require people to have a clear purpose. They can turn people ’s search for information into precise keywords, then give them to the search engine and finally return them to a series of lists. Users can give feedback on these results. But it will have the problem of the Matthew effect, which will cause the more popular things to become more popular as the search process iterates, making those less popular things sink to the sea.
+
+---
+
+而推荐引擎更适用于人们没有明确的目的，或者说他们的目的是模糊的，通俗来讲，用户连自己都不知道他想要什么，这时候正是推荐引擎的用户之地，推荐系统将用户的历史行为或者用户的兴趣偏好或者用户的人口统计学特征传送给推荐算法，然后推荐系统运用推荐算法来产生用户可能感兴趣的项目列表，用户对于搜索引擎是被动的。其中长尾理论（人们只关注曝光率高的项目，而忽略曝光率低的项目）可以很好的解释推荐系统的存在，试验表明位于长尾位置的曝光率低的项目产生的利润不低于只销售曝光率高的项目的利润。推荐系统正好可以给所有项目提供曝光的机会，以此来挖掘长尾项目的潜在利润。
+
+当用户需求比较明确的时候，用户会倾向于使用搜索，需求不太明确时，基于用户历史的一些行为和偏好给用户推荐一些东西能让用户先留下来，在用户浏览信息过程中可能就产生了一些新的诉求。
 
 从以上的部分可以看到推荐系统是一个多方共赢的存在：
 
@@ -29,31 +45,49 @@
 对物品而言，能够发掘长尾物品的利用效率，盘活整体资源；
 对平台而言，能够获取用户价值和商业价值。
 
-### 为什么值得研究？
-
-我们可以将人与Internet产生交互的场景分为三种情况：
-(a)人主动使用搜索引擎查询信息,Internet根据用户搜索的内容，产生相应的搜索结果并按照某种组织结构将这个结果返回呈现出来，这个Information的体量是非常庞大和复杂的。人阅读这个Information I，并在其中尝试找到自己需要的information i，（i属于I），将其提取出来。
-(b)人输入一些信息，Internet通过推荐系统输出一些推荐，并从巨大的信息流中选取用户需要的小部分信息，发送给用户。
-(c)推荐引擎主动搜索与它要推荐内容相匹配的受众以及收集Internet上用户无意识行为产生的数据并进行分析和推荐匹配。推荐引擎会主动的产生信息并将其推荐给相应的人。举例来说，一个顾客在Amazon上购买过某一件商品x，几天后，他在Youtube上观看视频，突然发现视频播放之前的广告是由商品x的生产企业投放的，广告内容是向他推荐与商品x类似的另一个商品y。这就是（c）交互场景简单出现在我们生活中的方式之一。未来推荐引擎基于（c）场景与人的交互方式和途径将会更加的自然和多样性。
-
-众所周知，谷歌和百度等等这些互联网巨鳄企业正是在早期依托搜索引擎技术优势，快速成长为互联网行业的巨型公司。如今的互联网技术和计算科学发展，使信息的产生和传递速度越来越快，体量越来越大，推荐系统在人们与Internaet的交互中扮演着非常重要和不可替代的作用，就如同图（b）中所描述的那样。但另一方便我们可以看到推荐引擎还有很大的发展潜力来达到和搜索引擎同等量级的重要性，就如图（c）所描述的。本文在推荐系统的explanation 和adaptation等方面做了一些有价值的研究和探索。
-
----
-
-Neural network has a pivotal role in recommend system and we use it to build a User-Movie-Neural-Network.
-
-The "explanation" has long been a question of great interest in a wide range of fields about a recommendation system.
-
-
 ---
 
 ### 前人研究的不足
 
 __Explaining the inadequacies of previous studies__
 
+
+Balabanovic et al. designed an adaptive agent for automated web browsing, in which we can see the prototype of the original recommendation system.
+
+Such recommendations are unsatisfactory because they … 传统的推荐系统，也就是我们现在正大部分使用的推荐系统只是做出推荐，用户不了解推荐的原因和意义，很多时候如果推荐算法不准确，会让推荐的结果很奇怪，加深用户对推荐系统的怀疑和不信任。完全的黑盒操作，用户无法选择只能被动接受也就无法通过交互来改善推荐的效果。
+
+Such traditional recommendation systems are unsatisfactory because most of the recommendation systems we use today only make recommendations. Users do not understand the reason and meaning of recommendations. In many cases, if the recommendation algorithm is not accurate or is completely wrong, the results of the recommendation will be strange and deepen the users' doubts and distrust. Recommendations are generated by the entire black-box operations. Users cannot choose but passively accept recommendations and cannot improve the effect of recommendation through interaction.
+
+---
+
+Yongfeng et al. introduced "Explainable Recommendation" which was a new survey and perspectives for recommendation system. However, much of the research up to now has been descriptive in the generation of explanation. 
+
+后来出现了对推荐的解释研究。我们可以用解释来做什么？用户对我们的解释会作出怎样的反馈，基于这些对解释的反馈，我们可以做出哪些针对explanation的优化，如何做出这种优化？
+
+What we can do with explanations and what feedback users can give to the system about the explanation. Based on feedback on explanations, what optimizations can the recommend system make for that and how can it make such optimizations. Little research has been done on these issues.
+
+---
+
+
 ### 确定先前缺乏的研究
 
 __Identifying the paucity or lack of previous research__
+
+
+
+### 说明当前研究的目的
+
+__Stating the purpose of the current research__
+
+
+### 描述当前研究的局限性
+
+__Describing the limitations of the current study__
+
+
+### 概述论文或论文的结构
+
+__Outlining the structure of the paper or dissertation__
 
 
 ### 这篇论文研究什么问题
@@ -62,20 +96,55 @@ __Identifying the paucity or lack of previous research__
 
 __Stating the focus, aim, or argument of a short paper__
 
-### 说明当前研究的目的
 
-__Stating the purpose of the current research__
+In this paper, we compare the different ways in 5 recommendation styles, provide an overview of the relationship among recommend system, recommendation explanation, and explanation adaptation. We explore the ways in which design an adaptation style for the recommendation explanation module and feedback scoring module. And we propose a new methodology for the "adaptation rule" or "adaptation algorithm" of recommendation explanation.
 
-### 描述当前研究的局限性
-
-__Describing the limitations of the current study__
-
-
-### 概述论文或论文的结构
-__Outlining the structure of the paper or dissertation__
 
 ### 这篇文章的贡献
+distribution
+
 从Internet发展的历史过程上，思考了人与互联网络的交互方式的分类，并探讨了与搜索引擎同等量级在未来具有很大发展前景和潜力的推荐引擎研究方向。
+
+### 为什么值得研究？
+
+我们可以将人与Internet产生交互的场景分为三种情况：
+
+We can divide the scenarios where people interact with the Internet into three situations:
+
+(a)人主动使用搜索引擎查询信息,Internet根据用户搜索的内容，产生相应的搜索结果并按照某种组织结构将这个结果返回呈现出来，这个Information的体量是非常庞大和复杂的。人阅读这个Information I，并在其中尝试找到自己需要的information i，（i属于I），将其提取出来。
+
+People proactive use search engines to get information, and the Internet generates corresponding search results based on what users search for and returns the results according to some organizational structure. The volume of this information "I" is very large and complex. People read this information "I" and try to find the information "i" they need (i belongs to I) and extract it.
+
+(b)人输入一些信息，Internet通过推荐系统输出一些推荐，并从巨大的信息流中选取用户需要的小部分信息，发送给用户。
+
+People enter some information, and the Internet outputs some recommendations through a recommendation system, and selects a small part of the information that the user needs from a huge information stream, and sends it to the user.
+
+---
+
+(c)推荐引擎主动搜索与它要推荐内容相匹配的受众以及收集Internet上用户无意识行为产生的数据并进行分析和推荐匹配。推荐引擎会主动的产生信息并将其推荐给相应的人。举例来说，一个顾客在Amazon上购买过某一件商品x，几天后，他在Youtube上观看视频，发现视频播放之前的广告是由商品x的生产企业投放的，广告内容是向他推荐与商品x类似的另一个商品y。这就是（c）交互场景简单出现在我们生活中的方式之一。未来推荐引擎基于（c）场景与人的交互方式和途径将会更加的自然和多样性。
+
+The recommendation engine actively searches for audiences that match the content it is recommending, collects data generated by users' unconscious behaviors on the Internet, and analyzes it. In addition, it will actively generate information and recommend that to the corresponding people. For example, a customer purchased a certain product x on Amazon. After a few days, he watched the video on Youtube and found that the advertisement before the video was put by the manufacturer of product x. And the advertising content was about another product y similar to product x. This is one of the ways in which (c) interaction scenarios simply appear in our lives. In the future, human interaction approaches for the recommendation engine based on the scenario (c)  will be more natural and diverse.
+
+---
+
+从纵向上来分析，随着时间推移和计算机技术的发展。人的主动性在减少，相对应的，Internet的主动性在增加。这可能是未来推荐系统发展的趋势。
+
+From a vertical perspective, over time and the development of computer technology. Human initiative is decreasing, and correspondingly, Internet initiative is increasing. This may be the trend of future recommendation system development.
+
+---
+
+谷歌和百度等等这些互联网巨鳄企业正是在早期依托搜索引擎技术优势，快速成长为互联网行业的巨型公司。如今的互联网技术和计算科学发展，使信息的产生和传递速度越来越快，体量越来越大，推荐系统在人们与Internaet的交互中扮演着非常重要和不可替代的作用，就如同图（b）中所描述的那样。但另一方面我们可以看到推荐引擎还有很大的发展潜力来达到和搜索引擎同等量级的重要性，就如图（c）所描述的。本文在推荐系统的explanation 和adaptation等方面做了一些有价值的研究和探索。
+
+Internet giants such as Google and Baidu, which relied on the advantages of search engine technology in the early days, quickly grew into giant companies in the Internet industry. With the development of Internet technology and computing science today, the speed of information generation and transmission is getting faster and faster, and the volume is getting larger and larger. The recommendation system plays a very important and irreplaceable role in the interaction between people and the Internet, as described in (b). But on the other hand, we can see in (c) that recommendation engines have great development potential to achieve the same magnitude as search engines. In this paper, we will do some valuable research and exploration in aspects such as explanation and adaptation for recommend system.
+
+---
+
+Neural network has a pivotal role in recommend system and we use it to build a User-Movie-Neural-Network.
+
+The "explanation" has long been a question of great interest in a wide range of fields about a recommendation system.
+
+
+
 
 ## Related Work
 
