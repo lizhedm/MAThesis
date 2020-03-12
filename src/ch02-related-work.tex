@@ -4,16 +4,78 @@
 \epigraph{That men do not learn very much from the lessons of history is the most important of all the lessons that history has to teach.}{Aldous Huxley}
 
 \subsection{Recommend System}
+Francesco et al. systematically and comprehensively describe the recommendation system in the handbook for Recommender Systems \cite{ricci2011introduction}. Recommender Systems are software tools and techniques providing suggestions for items to be of use to a user. The suggestions provided are aimed at supporting their users in various decision-making processes, such as what items to buy, what music to listen, or what news to read. Recommender systems have proven to be valu- able means for online users to cope with the information overload and have become one of the most powerful and popular tools in electronic commerce. Correspondingly, various techniques for recommendation generation have been proposed and during the last decade, many of them have also been successfully deployed in commercial environments.
 
-the related-work part 1.
-	\subsubsection{conversational RS and Hybrid RS}
+\subsection{Explainable Recommendation}
+\subsubsection{Definition}
+Explainable Recommendation refers to the personalized recommendation algorithms that address the problem of why - they not only provide users with the recommendations, but also provide explanations to make the user or system designer aware of why such items are recommended. In this way, it helps to improve the effectiveness, effeciency, persuasiveness, and user satisfaction of recommendation systems. Yongfeng et al. first highlight the position of explainable recommendation in recommender system research by categorizing recommendation problems into the 5W, i.e., what, when, who, where, and why, in their survey \cite{zhang2018explainable}. 
+\\
+\\
+\textbf{When:} time-aware recommendation \\
+\textbf{What:} application-aware recommendation \\
+\textbf{Who:} social recommendation \\
+\textbf{Where:} location-based recommendation \\
+\textbf{Why:} explainable recommendation \\
+\par Research on the question about "Why" has created a new research area: explainable recommendation.
+\par To make personalized recommendation models intuitively understandable, researchers have more and more turned to the study of Explainable Recommendation Models, where the recommendation algorithm not only provides a recommendation list as output, but also naturally works in an explainable way and provides explanations to accompany the recommendations \cite{mcauley2015image}.
+\par There are many different display styles of explanations: Explanation based on Relevant Users or Items, Feature-based Explanation, Textual Sentence Explanations, Visual Image Explanations and Social Explanation. Explanation based on relevant users or items, which presents nearest-neighbor users or items as explanation, and the relevant users or items are provided by user-based or item-based collaborative filtering methods. In this thesis, we will use a Path Generate Algorithm based on nearest-neighbor to build the model of our explainable recommendation system.
+\par Explanation based on relevant users or items, which presents nearest-neighbor users or items as explanation, and the relevant users or items are provided by user-based or item-based collaborative filtering methods. User-based and item-based collaborative filtering \cite{sarwar2001item}, \cite{cleger2012top} are two fundamental methods for personalized recommendation.
+\par Feature-based explanation, which provides users with the item features that match with the target user?s interest profile as explanation.
+\par We combine these two and build a hybrid explainable recommendation system that can handle both types of explainable recommendations simultaneously.
 
-\subsection{Explanation Recommend System}
+\subsubsection{Graph-based Models for Explanation}
+Graphs can be used to represent user-user or user-item relationships in most cases. Various studies have assessed the efficacy of Graph-based Models for Explanation. Graph learning approaches such as graph-based propagation and graph clustering can be used to generate the explainable recommendations. Most research on modeling for explainable recommendation has been carried out in Graph-based model. He et al.\cite{he2015trirank} described a tripartite graph to model the user-item-aspect ternary relation for a top-N recommendation. They proposed TriRank, a common-used algorithm for ranking on tripartite graphs by regularizing and normalizing the fitting constraints and smoothness.
+\par Based on the user-item bipartite graph for the explainable recommendation, Reinhard and his team \cite{heckel2017scalable} proposed to conduct over-lapping co-clustering, without using external information such as aspects. The users have similar interests and the items are of similar features in each co-cluster. 
 
-the related-work part 2.
+\begin{figure}[h]
+\caption{OC-uLaR algorithm example\cite{heckel2017scalable}}
+\label{figure:2-1}
+\centering
+\includegraphics[width=0.8\textwidth]{oc_ular_algorithm}
+\end{figure}
 
-\subsection{Adaptation for ExplanationRecommend System}
+\subsection{Graph Neural Network Algorithm}
+\subsubsection{GCN}
+Graph Convolutional Network (GCN) can be used to build most of the large datasets we already have. For these models, the goal is then to learn a function of signals/features on a graph $ G=(\upsilon ,\varepsilon ) $.\\
+\begin{itemize}
+\item[(i.)] A feature description $x_{i}$ for every node i; summarized in a N$\times$D feature matrix X (N: number of nodes, D: number of input features).
+\item[(ii.)] A representative description of the graph structure in matrix form; typically in the form of an adjacency matrix A (or some function thereof).
+and produces a node-level output Z (an N$\times$F feature matrix, where F is the number of output features per node). Graph-level outputs can be modeled by introducing some form of pooling operation. \cite{duvenaud2015convolutional}
+\[
+f(H^{l},A) = \sigma (AH^{(l)}W^{(l)});
+\]
+\end{itemize}
+the above is a very simple form of a layer-wise propagation rule. Duvenaud and his team \cite{duvenaud2015convolutional} address two limitations of this simple model: 
+\begin{itemize}
+\item[(j.)] Multiplication with A means that, for every node, we sum up all the feature vectors of all neighboring nodes but not the node itself (unless there are self-loops in the graph).
+\item[(jj.)] A  is typically not normalized and therefore the multiplication with A will completely change the scale of the feature vectors (we can understand that by looking at the eigenvalues of A).
+They essentially describe a new propagation rule introduced in \cite{kipf2016semi}:
+\[
+f(H^{l},A) = \sigma (\hat{D}^{-\frac{1}{2}} \hat{A}\hat{D}^{-\frac{1}{2}}H^{ (l) }W^{ (l) }) ;
+\]
+\end{itemize}
 
-the related-work part 3.
+\subsubsection{GraphSAGE}
+Low-dimensional vector embeddings of nodes in large graphs1 have proved extremely useful as feature inputs for a wide variety of prediction and graph analysis tasks. Hamilton and his team\cite{hamilton2017inductive}describe the embedding generation, or forward propagation algorithm , which assumes that the model has already been trained and that the parameters are fixed. In particular, they assume that they have learned the parameters of K aggregator functions. The key idea of the method GraphSAGE behind their approach is that they learn how to aggregate feature information from a node's local neighborhood. Specifically, they use Embedding generation (i.e., forward propagation) algorithm in algorithm \ref{algorithm:1}.
+\par Our kernel recommend algorithm for generating path is conceptually inspired by a classic algorithm for testing graph isomorphism and GraphSAGE algorithm.
+\\
+\\
+\\
+\begin{algorithm}[H]
+\SetAlgoLined
+\textbf{Input:} Graph G($\nu$, $\varepsilon $); input features \{x$_{v}$, $ \forall $ v $ \in $ V\}; depth K; weight matrices W$ ^{k} $, $ \forall $k $ \in $ \{1, ..., K\}; non-linearity $ \sigma $; differentiable aggregator functions AGGREGATE$_{k}$, $ \forall $ k $ \in $ \{1, ..., K\}; neighborhood function N : v  $ \rightarrow $ 2$ ^{v} $  \\
+\textbf{Output:} Vector representations z$_{v}$ for all $\nu$ $ \in $ V \\
+h$_{v}^{0}$ $ \leftarrow \chi _{v},\forall v\in V $ \\
+ \For{k = 1...}{
+ \For{$ v\in V $}{
+ $ h_{N_{(v)}}^{k}\leftarrow AGGREGATE_{k}(\{ h_{u}^{k-1},\forall u \in N(v) \}) ; $ \\
+ $ h_{v}^{k} \leftarrow \sigma\left ( W^{k} \cdot CONCAT(h_{v}^{k-1},h_{N_{(v)}}^{k}) \right ) ; $ \\
+ }
+ $ h{_{v}}^{k} \leftarrow {h{_{v}}^{k} / \left \| h{_{v}}^{k} \right \|} _{2},\forall v \in \nu ; $ \\
+ }
+ $ z_{v} \leftarrow h_{v}^{k}, \forall v \in \nu $ \\
+ \caption{GraphSAGE Embedding Generation Algorithm}
+ \label{algorithm:1}
+\end{algorithm}
 
 \cleardoublepage

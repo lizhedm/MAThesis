@@ -185,7 +185,7 @@ Adapt the shown of the explanation. The original movie recommendation explanatio
     \[ count_{x} = 0 \] \
    }
  }
- \caption{Adaptation rule algorithm}
+ \caption{Adaptation Rule Algorithm}
 \end{algorithm}
 
 \subsection{Machine Learning Algorithm}
@@ -211,6 +211,7 @@ P_{v_{1}} = \begin{bmatrix}
 \end{bmatrix}
 \ \ \ \ L_{P}\times N_{P}
 \]
+\\
 \[
 L_{P} : Length \ of \ Path
 \]
@@ -219,28 +220,31 @@ N_{P} : Count \ of \ Path
 \]
 \[
 \left\{\begin{matrix}
-\\ P_{1} = f_{path-encoder} (V_{genres},V_{I_{1}},V_{1})
+\\ p_{1} = f_{path-encoder} (V_{genres},V_{I_{1}},V_{1})
 \\ ...
 \\ ...
-\\ P_{N_{P}} = f_{path-encoder} (V_{director},V_{I_{N}},V_{1})
+\\ p_{N_{P}} = f_{path-encoder} (V_{director},V_{I_{N}},V_{1})
 
 \end{matrix}\right.
 \]
 \[
-att_{p_{1}} = \frac{e^{P_{1} \cdot A^{T}}}{e^{sig(p_{1}\cdot A^{T})}  +  e^{sig(p_{2}\cdot A^{T})}  + \cdot \cdot \cdot +e^{sig(p_{N_{P}}\cdot A^{T})}}
+att_{p_{1}} = \frac{e^{P_{1} \cdot A^{T}}}{e^{\sigma(p_{1}\cdot A^{T})}  +  e^{\sigma(p_{2}\cdot A^{T})}  + \cdot \cdot \cdot +e^{\sigma(p_{N_{P}}\cdot A^{T})}}
 \]
 \[
-hv_{1} =  \sum_{i=1}^{N_{P}} att_{i}\cdot P_{i}
+\textbf{h}v_{1} =  \sum_{i=1}^{N_{P}} att_{i}\cdot P_{i}
 \]
 \[
-\hat{r} = h_{user}\cdot h_{att}^{T}
+\hat{r} = \textbf{h}_{user}\cdot \textbf{h}_{att}^{T}
 \]
  
 \caption{Path Generated Algorithm}
+\label{algorithm:3}
 \end{algorithm}
 
-\subsubsection{Training Weights}
-
+\textbf{Training Weights:}\\
+$ A^{T} $ in algorithm \ref{algorithm:3} is a matrix that can be trained with large amounts of data. \\
+$ \sigma $ is sigmoid function.\\
+The $ att_{p_{1}} $ is also called a softmax(P,a) \cite{wu2016deep}.
 
 \subsection{User Interface Prototype} 
 

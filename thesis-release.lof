@@ -1,0 +1,24 @@
+\select@language {english}
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Interaction styles between people and Internet\relax }}{5}{figure.caption.8}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces OC-uLaR algorithm example\cite {heckel2017scalable}\relax }}{8}{figure.caption.9}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces System Architecture\relax }}{11}{figure.caption.10}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces UMNN Module\relax }}{12}{figure.caption.11}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces frontend and backend\relax }}{14}{figure.caption.12}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Flask working process\relax }}{14}{figure.caption.13}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Cold start process\relax }}{15}{figure.caption.14}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces user-based recommendation strategy\relax }}{16}{figure.caption.15}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces item-based recommendation strategy\relax }}{17}{figure.caption.16}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces demographic-based recommendation strategy\relax }}{17}{figure.caption.17}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces content-based recommendation strategy\relax }}{18}{figure.caption.18}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Word cloud\relax }}{20}{figure.caption.21}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces User interface prototype\relax }}{23}{figure.caption.22}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Feedback question about system evaluation\relax }}{26}{figure.caption.24}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Feedback question about 3 round recommendations\relax }}{27}{figure.caption.25}
+\contentsline {figure}{\numberline {8.1}{\ignorespaces Explanation Page\relax }}{37}{figure.caption.31}
+\contentsline {figure}{\numberline {8.2}{\ignorespaces User Information Page\relax }}{37}{figure.caption.32}
+\contentsline {figure}{\numberline {8.3}{\ignorespaces User Background Page\relax }}{38}{figure.caption.33}
+\contentsline {figure}{\numberline {8.4}{\ignorespaces Movie Preview Page\relax }}{38}{figure.caption.34}
+\contentsline {figure}{\numberline {8.5}{\ignorespaces Movie Degree Page\relax }}{38}{figure.caption.35}
+\contentsline {figure}{\numberline {8.6}{\ignorespaces Movie Degree Page with scores\relax }}{39}{figure.caption.36}
+\contentsline {figure}{\numberline {8.7}{\ignorespaces Coresponding User Inforamtion Page\relax }}{39}{figure.caption.37}
+\contentsline {figure}{\numberline {8.8}{\ignorespaces User Feedback Page\relax }}{39}{figure.caption.38}

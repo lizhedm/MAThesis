@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt,a4paper,twoside]{article}
 \usepackage{theme/lmuthesis}
 
 % this for draft water mark
@@ -18,16 +18,16 @@
 \title{Explanation Adaptation for Hybrid Multimedia Recommendation System}
 \author{Zhe Li}
 \email{Li.Zhe@campus.lmu.de}
-\bearbeitungszeitraum{START bis END} 
+\bearbeitungszeitraum{02.08.2019 to 02.03.2020} 
 \supervisor{Zhiwei Han and Yuanting Liu}
 \taskdescription{
     \begin{description}
-        \item[THESIS TITLE]
+        \item[THESIS TITLE] Explanation Adaptation for Hybrid Multimedia Recommendation System
         \item[Problem Statement] TO BE ADDED
         \item[Scope of the Thesis] TO BE ADDED
         \item[Tasks] TO BE ADDED
         \item[Requirements] TO BE ADDED
-        \item[Keywords] TO BE ADDED
+        \item[Keywords] RECOMMENDATION SYSTEM, EXPLAINABLE RECOMMENDATION, EXPLANATION ADAPTATION, GRAPH NEURAL NETWORK, UMNN
     \end{description}
 }
 \acknoledgement{
@@ -45,8 +45,10 @@
 \makeabstract
 \maketoc
 % optional:
-% \listoffigures
-% \listoftables
+\listoffigures
+\listoftables
+\listofalgorithms
+
 \cleardoublepage
 
 \input{src/ch01-intro}
@@ -54,12 +56,10 @@
 \input{src/ch03-system-design}
 \input{src/ch04-experiment}
 \input{src/ch05-evaluation}
-\input{src/ch06-application}
-\input{src/ch07-discussion}
-\input{src/ch08-conclusion}
-\input{src/ch09-appendix}
+\input{src/ch06-discussion}
+\input{src/ch07-conclusion}
 
-
+\input{src/ch08-appendix}
 \input{literatures/bib.tex}
 
 \end{document}

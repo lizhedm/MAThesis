@@ -35,16 +35,26 @@ Search engines require people to have a clear purpose. They can turn people ’s
 
 ---
 
-而推荐引擎更适用于人们没有明确的目的，或者说他们的目的是模糊的，通俗来讲，用户连自己都不知道他想要什么，这时候正是推荐引擎的用户之地，推荐系统将用户的历史行为或者用户的兴趣偏好或者用户的人口统计学特征传送给推荐算法，然后推荐系统运用推荐算法来产生用户可能感兴趣的项目列表，用户对于搜索引擎是被动的。其中长尾理论（人们只关注曝光率高的项目，而忽略曝光率低的项目）可以很好的解释推荐系统的存在，试验表明位于长尾位置的曝光率低的项目产生的利润不低于只销售曝光率高的项目的利润。推荐系统正好可以给所有项目提供曝光的机会，以此来挖掘长尾项目的潜在利润。
+而推荐引擎更适用于人们没有明确的目的，或者说他们的目的是模糊的，通俗来讲，用户连自己都不知道他想要什么，推荐系统将用户的历史行为或者用户的兴趣偏好或者用户的人口统计学特征传送给推荐算法，然后推荐系统运用推荐算法来产生用户可能感兴趣的项目列表，用户对于搜索引擎是被动的。其中长尾理论（人们只关注曝光率高的项目，而忽略曝光率低的项目）可以很好的解释推荐系统的存在，试验表明位于长尾位置的曝光率低的项目产生的利润不低于只销售曝光率高的项目的利润。推荐系统正好可以给所有项目提供曝光的机会，以此来挖掘长尾项目的潜在利润。
 
-当用户需求比较明确的时候，用户会倾向于使用搜索，需求不太明确时，基于用户历史的一些行为和偏好给用户推荐一些东西能让用户先留下来，在用户浏览信息过程中可能就产生了一些新的诉求。
+The recommendation engine is more suitable for people who have no clear purpose, or that their purpose is ambiguous. Generally speaking, the user does not even know what he wants. The user's historical behavior or the user's interest preferences or the user's demographic characteristics are transmitted to the recommendation system, and then the recommendation system uses some algorithm to generate a list of items that the user may be interested in. The user is passive to search engines. People only focus on high-exposure items and ignore low-exposure items, which is called the long-tail theory, can be used to explain the correctness and rationality of the recommendation system well. Experiments have shown that the low-exposure items in the long tail position generate no less than profit from selling only high-visibility items. The recommendation system can provide opportunities for all items to be recommended, for discovering the potential profits of long-tail projects.
 
-从以上的部分可以看到推荐系统是一个多方共赢的存在：
+---
+
+当一个用户需求比较明确的时候，他会倾向于使用搜索。需求不太明确时，基于用户历史的一些行为和偏好给用户推荐一些东西能让用户先留下来，在用户浏览信息过程中可能就产生了一些新的诉求。
+When a user's needs are clear, he tends to use search. When the requirements of the user are not clear, some behaviors and preferences data based on the user's history can be used to generate a pre-recommendation, to make the user stay in the system. Some new demands may arise during the user's browsing of information.
+
+从以上的部分可以看到推荐系统是一个多方共赢的事物：
 
 对用户而言，能够发现自己感兴趣的东西，提升用户体验；
 对物品而言，能够发掘长尾物品的利用效率，盘活整体资源；
 对平台而言，能够获取用户价值和商业价值。
 
+From the above sections, we can see that the recommendation system is a multi-win-win thing:
+
+For users, they can discover what they are interested in and improve the user experience;
+For items, it is possible to discover the utilization efficiency of long-tail items and revitalize the overall resources;
+For the platform, it is able to capture user value and business value.
 ---
 
 ### 前人研究的不足
@@ -176,6 +186,24 @@ The "explanation" has long been a question of great interest in a wide range of 
 组合推荐。由于各种推荐方法都有优缺点，所以在实际中，组合推荐经常被采用。研究和应用最多的是内容推荐和协同过滤推荐的组合。最简单的做法就是分别用基于内容的方法和协同过滤推荐方法去产生一个推荐预测结果，然后用某方法组合其结果。
 
 ---
+
+### Definition
+
+### Graph-based Models for Explanation
+
+Graphs can be used to represent user-user or user-item relationships in most cases. Various studies have assessed the efficacy of Graph-based Models for Explanation. Graph learning approaches such as graph-based propagation and graph clustering can be used to generate the explainable recommendations. Most research on modeling for explainable recommendation has been carried out in Graph-based model. He et al.\cite{he2015trirank} described a tripartite graph to model the user-item-aspect ternary relation for a top-N recommendation. They proposed TriRank, a common-used algorithm for ranking on tripartite graphs by regularizing and normalizing the fitting constraints and smoothness.
+
+Based on the user-item bipartite graph for the explainable recommendation, Reinhard and his team
+proposed to conduct over-lapping co-clustering, without using external information such as aspects. The users have similar interests and the items are of similar features in each co-cluster. 
+
+Example of overlapping user-item co-clusters identified by the OC- uLaR algorithm in (Heckel et al. [2017]) 
+
+### Graph Neural Network Algorithm
+
+#### GCN
+
+#### GraphSAGE 
+
 
 ## System Design
 
@@ -461,6 +489,10 @@ Taking the ratio of different recommended styles as an example, we can establish
 
 
 ## Experiment
+
+### User Study Process
+
+
 ### 评估
 system evaluation
 
@@ -543,3 +575,33 @@ Comparing the three questions about accuracy ( Q7, Q9, Q10), we can find a very 
 Most recommendation systems, including our recommendation system, often recommend things that users may be interested in based on some data and records. This is certainly the right recommendation, but sometimes it may not be what users really expect and demand. The recommended things only satisfy the user's physiological needs, safety needs, and social needs. And higher-level esteem and self-actualization needs may become one of the possible development directions of future recommendation systems research area.
 
 ---
+
+## Conclusion
+
+我们已经明白推荐解释对于推荐系统的重要性。目前的很多商用的推荐系统很少提供解释，即使提供推荐解释，大多数只是采用单一简陋的解释机制。而且这些推荐解释，并没有被充分利用来提升推荐系统的性能。
+
+在本文中，我们通过实验印证了对推荐系统的可解释性的研究有助于推荐系统与用户更好的交互，从而产生准确有效可信任的推荐。
+
+未来可解释推荐系统的研究发展方向，可以朝着以下几个方面发展：
+
+1.智能化，可视化
+
+现在的推荐解释更多使用简单的文字解释来呈现，对于海量信息推荐系统来说，文字呈现出的解释内容必然也会体量巨大，比如用户浏览一个购物网站，每一件商品的推荐解释可能只有3行文字，但如果几百个商品同时展示给用户并附上每个商品的推荐解释，用户要接收的数据量就非常巨大了。这某种程度上影响了对用户的友好度，并大大降低了推荐解释的效率。
+
+通过可视化解释内容来减少用户的信息接收负担。随着推荐越来越精准，越来越个性化，推荐解释的内容表达将会更加智能化，更接近于用户容易理解的自然语言，以此强化与用户的交互，有效提高用户的信任程度和满意度。
+
+2.设计解释时考虑更全面
+
+系统设计者在设计推荐解释时，为了使得解释能够更好地促进推荐系统提升效用，除了考虑解释自身的评估标准，明确解释欲发挥的目标作用外，还要将推荐系统的展现方式、用户与解释的交互方式等方面考虑在内。
+
+3.分类更加细化
+
+随着推荐系统的不断发展，当新型的推荐算法出现时，新的解释类型也随之登场。为了让推荐解释分类能够更加一般化，能够囊括全新的解释类型，解释的分类维度将需要进一步扩充，而不单单只是基于用户、产品和内容特征三者。可能将来还会加入如时间、地点、情感等新的维度。
+
+4.更深入研究不同解释间的性能比较
+
+目前虽然有了对推荐解释的评估标准，但针对不同解释类型间基于不同目标作用的性能比较，这方面的研究成果仍然比较欠缺。而如果能够准确地对比不同解释类型在不同需求下的优劣差异，那么将有利于系统设计者能够更加准确地为不同推荐系统选择恰当的推荐解释。
+
+5.解释界面更加创新
+
+未来将有更多研究工作会集中在新型的解释界面上，让解释能显得更加直观，更加易懂。下图是一款名为“Treemap”的新型解释界面，用不同的颜色种类，颜色亮度和方格大小来区分不同推荐项目的优先程度。
