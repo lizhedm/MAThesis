@@ -1,3 +1,11 @@
+With the development of communication technology and data science, the relationship between people and information has evolved from one-way, people looking for information, to the current two-way relationship. The recommendation system plays a more important role in it. An explainable recommendation system can interact with users in a transparent and efficient way. We build a hybrid movie recommendation system to compare some different ways of recommendation styles and design an adaptation style for the recommendation by using an explanation template. And we propose a new methodology for the "adaptation rule" of recommendation explanation. A new bipartite graph-based algorithm is designed to represent our user-movie network.
+
+
+Hybrid RS: making content-based and collaborative-based predictions separately and then combining them. 
+	* b. Hybrid methods can provide more accurate recommendations than pure approaches.
+	* c. overcome some of the common problems in recommender systems such as cold start
+
+
 
 ## Introduction
 
@@ -175,15 +183,27 @@ The "explanation" has long been a question of great interest in a wide range of 
 
 整个推荐系统可以看作是一个加工厂，输入用户和物品数据，输出用户可能会感兴趣的物品清单，然后从物品清单中取前若干个作为推荐结果给到用户。
 
+The entire recommendation system can be regarded as a processing plant, inputting user and item data, outputting a list of items that the user may be interested in, and then taking the first several from the item list as the recommendation result to the user.
+
 在这个过程中还需要做一些过滤，排序工作，输出结果的时候最好能让用户知道为什么推荐这个东西，这样用户的接受度会高一些。
+
+In this process, we need to do some filtering and sorting. When outputting results, it is best to let users know why this is recommended, so that the user's acceptance will be higher.
 
 ---
 
-通过一些数学算法，推测出用户可能喜欢的东西，目前应用推荐算法比较好的地方主要是网络，其中淘宝做的比较好。所谓推荐算法就是利用用户的一些行为，通过一些数学算法，推测出用户可能喜欢的东西。
+通过一些数学算法，推测出用户可能喜欢的东西。所谓推荐算法就是利用用户的一些行为，通过一些数学算法，推测出用户可能喜欢的东西。
+Through some mathematical algorithms, guess what users might like. The recommendation algorithms use some of the user's behavior and some mathematical algorithms to infer what the user might like.
+
 
 推荐算法是由机器进行的，能处理大量的信息的同时，它又显得不是那么的人情化，在向用户推送的过程中难免会出现用户不再需求或者是与喜好相违背的内容，但基于机器强大的处理能力，它能处理的信息远远大于人工。
 
-组合推荐。由于各种推荐方法都有优缺点，所以在实际中，组合推荐经常被采用。研究和应用最多的是内容推荐和协同过滤推荐的组合。最简单的做法就是分别用基于内容的方法和协同过滤推荐方法去产生一个推荐预测结果，然后用某方法组合其结果。
+The recommendation algorithm is performed by a machine. While it can process a large amount of information, it is not so humane. In the process of pushing recommendations to the user, the powerful processing energy of the machine can deal with much more information than humans.
+
+
+
+单一的推荐方法效果很差。由于各种推荐方法都有优缺点，所以在实际应用中，组合推荐经常被采用。我们研究了和内容推荐和协同过滤推荐的组合以及适配方法。最简单的做法就是分别用基于内容的方法和协同过滤推荐方法去产生一个推荐预测结果，然后用template的方法组合其结果，并可以让推荐的解释和用户交互，来适配这个结果。
+
+
 
 ---
 
@@ -576,32 +596,67 @@ Most recommendation systems, including our recommendation system, often recommen
 
 ---
 
+## Discussion
+
+我们的系统hybrid，cold start，提出了adaptation model
+
 ## Conclusion
 
+we compared the different ways in 5 recommendation styles and proposed a hybrid recommendation system combined all the 5 recommendation styles. We provided an overview of the relationship among recommend system, recommendation explanation, and explanation adaptation. We explored the ways in which design an adaptation style for the recommendation explanation module and feedback scoring module. And we proposed a new methodology for the "adaptation rule" or "adaptation algorithm" of recommendation explanation.
+
+---
+
 我们已经明白推荐解释对于推荐系统的重要性。目前的很多商用的推荐系统很少提供解释，即使提供推荐解释，大多数只是采用单一简陋的解释机制。而且这些推荐解释，并没有被充分利用来提升推荐系统的性能。
+
+We have understood the importance of the recommendation explanation for recommendation systems. Many current commercial recommendation systems rarely provide explanations, and even if a recommendation explanation is provided, most of them only adopt a single simple explanation mechanism. And these recommendation explanations are not fully utilized to improve the performance of the recommendation system.
+
+---
 
 在本文中，我们通过实验印证了对推荐系统的可解释性的研究有助于推荐系统与用户更好的交互，从而产生准确有效可信任的推荐。
 
 未来可解释推荐系统的研究发展方向，可以朝着以下几个方面发展：
 
+In this thesis, we have experimentally confirmed that the research on the interpretability of the recommendation system helps the recommendation system to better interact with users, thereby generating accurate, effective and trustworthy recommendations.
+
+In the future, the research direction of explanation recommendation systems can be the following aspects:
+
+---
+
 1.智能化，可视化
+Intelligence and visualization
 
-现在的推荐解释更多使用简单的文字解释来呈现，对于海量信息推荐系统来说，文字呈现出的解释内容必然也会体量巨大，比如用户浏览一个购物网站，每一件商品的推荐解释可能只有3行文字，但如果几百个商品同时展示给用户并附上每个商品的推荐解释，用户要接收的数据量就非常巨大了。这某种程度上影响了对用户的友好度，并大大降低了推荐解释的效率。
+现在的推荐解释更多使用简单的文字解释来呈现，对于存储了海量信息的推荐系统来说，文字呈现出的解释内容必然也会体量巨大，比如用户浏览一个购物网站，每一件商品的推荐解释可能只有3行文字，但如果几百个商品同时展示给用户并附上每个商品的推荐解释，用户要接收的数据量就非常巨大了。这某种程度上影响了对用户的友好度，并大大降低了推荐解释的效率.
 
-通过可视化解释内容来减少用户的信息接收负担。随着推荐越来越精准，越来越个性化，推荐解释的内容表达将会更加智能化，更接近于用户容易理解的自然语言，以此强化与用户的交互，有效提高用户的信任程度和满意度。
+The current recommendation explanations are more often presented with simple text explanations. For recommendation systems that store a large amount of information, the explanation content presented by the text is also bound to be huge. For example, a user browses a shopping website, the recommend explanation may only be 3 lines of text, but if hundreds of products, with recommending explanations, are displayed to the user at the same time. The amount of data the user will receive is very large, it will affect user-friendliness and greatly reduces the efficiency of recommendation explanation.
 
-2.设计解释时考虑更全面
+---
 
-系统设计者在设计推荐解释时，为了使得解释能够更好地促进推荐系统提升效用，除了考虑解释自身的评估标准，明确解释欲发挥的目标作用外，还要将推荐系统的展现方式、用户与解释的交互方式等方面考虑在内。
+通过可视化解释内容来减轻用户的信息接收负担。随着推荐越来越精准，越来越个性化，推荐解释的内容表达可以设计的更加智能化，可以尝试使用深度学习生成更接近于用户容易理解的自然语言，以此强化与用户的交互，有效提高用户的信任程度和满意度。
+
+We can reduce the user's information receiving burden by visualizing the explanation. As recommendations become more precise and personalized, the content of recommendation explanations can be designed more intelligently. Trying to use deep learning methods to generate natural language that users can easily understand, to strengthen the interaction with the user and to improve user trust and satisfaction and effectively.
+
+---
+
+2.设计更全面的解释模版
+Design a more comprehensive interpretation template
+
+为了更好地解释和提高推荐系统的有效性，除了考虑解释的评估标准并对其进行清楚的解释外，还应考虑推荐系统的表示方法，用户与解释之间的交互以及其他方面.
+
+For better interpreting and promoting the effectiveness of the recommendation system, in addition to considering the evaluation criteria of the explanation and clearly explaining it, the presentation method of the recommendation system, interaction between users and explanations, and other aspects should also be taken into account.
+
+---
+
 
 3.分类更加细化
+More detailed classification
 
 随着推荐系统的不断发展，当新型的推荐算法出现时，新的解释类型也随之登场。为了让推荐解释分类能够更加一般化，能够囊括全新的解释类型，解释的分类维度将需要进一步扩充，而不单单只是基于用户、产品和内容特征三者。可能将来还会加入如时间、地点、情感等新的维度。
 
+With the continuous development of recommendation systems, when new types of recommendation algorithms appear, new types of explanation also appear. To make the recommend explanation classification more general and to include a new type of interpretation, the classification dimension of interpretation will need to be further expanded, not just based on the three characteristics of users, products, and content. New dimensions such as time, place, and emotion may be added in the future.
+
 4.更深入研究不同解释间的性能比较
+Dive deeper into performance comparisons between explanation styles
 
 目前虽然有了对推荐解释的评估标准，但针对不同解释类型间基于不同目标作用的性能比较，这方面的研究成果仍然比较欠缺。而如果能够准确地对比不同解释类型在不同需求下的优劣差异，那么将有利于系统设计者能够更加准确地为不同推荐系统选择恰当的推荐解释。
 
-5.解释界面更加创新
-
-未来将有更多研究工作会集中在新型的解释界面上，让解释能显得更加直观，更加易懂。下图是一款名为“Treemap”的新型解释界面，用不同的颜色种类，颜色亮度和方格大小来区分不同推荐项目的优先程度。
+At present, although there are evaluation standards for recommendation explanation, the research results in this area are still lacking for the performance comparison of different explanation types based on the role of different goals. And if we can accurately compare the advantages and disadvantages of different explanation types under different requirements, it will help system designers to more accurately choose the appropriate recommendation explanation styles for different recommendation systems.

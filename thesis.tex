@@ -1,6 +1,15 @@
 \documentclass[11pt,a4paper,twoside]{article}
 \usepackage{theme/lmuthesis}
 
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
 % this for draft water mark
 \input{condition}
 \ifthenelse{\boolean{release}}{
@@ -23,18 +32,18 @@
 \taskdescription{
     \begin{description}
         \item[THESIS TITLE] Explanation Adaptation for Hybrid Multimedia Recommendation System
-        \item[Problem Statement] TO BE ADDED
-        \item[Scope of the Thesis] TO BE ADDED
-        \item[Tasks] TO BE ADDED
-        \item[Requirements] TO BE ADDED
-        \item[Keywords] RECOMMENDATION SYSTEM, EXPLAINABLE RECOMMENDATION, EXPLANATION ADAPTATION, GRAPH NEURAL NETWORK, UMNN
+        \item[Problem Statement] How to make the explainable recommendation system interact with the user in a transparent and efficient way
+        \item[Tasks] Build a hybrid movie recommendation system to compare some different ways of recommendation styles and design an adaptation style for the recommendation by using an explanation template.
+        \item[Keywords] Recommendation System, Explainable Recommendation, Explanation Adaptation, Graph Neural Network, UMNN
     \end{description}
 }
 \acknoledgement{
-    I would like to appreciate ...
+\par First of all, I would like to appreciate my supervisor Zhiwei Han and Yuanting Liu for their valuable advice on my thesis. They gave me goals and directions for finishing my thesis.
+\par And I would like to appreciate Prof.Andreas Butz and Prof.Heinrich Hussmann, their rigorous academic attitude and profound knowledge, the unpretentious and approachable personality charm have a profound influence on me, and it is my role model to learn.
+\par And I would like to appreciate my parents for help during my studies, with funding and love. Finally, I would like to say thanks to all my friends who accompanied me during my master studies and thank them for all the helpful suggestions and opinions they provided for me.
 }
 \abstract{
-    This thesis proposes ...
+    With the development of communication technology and data science, the relationship between people and information has evolved from one-way, people looking for information, to the current two-way relationship. The recommendation system plays a more important role in it. An explainable recommendation system can interact with users in a transparent and efficient way. We build a hybrid movie recommendation system to compare some different ways of recommendation styles and design an adaptation style for the recommendation by using an explanation template. And we propose a new methodology for the "adaptation rule" of recommendation explanation. A new bipartite graph-based algorithm is designed to represent our user-movie network.
 }
 
 \begin{document}
@@ -48,6 +57,7 @@
 \listoffigures
 \listoftables
 \listofalgorithms
+\lstlistoflistings
 
 \cleardoublepage
 

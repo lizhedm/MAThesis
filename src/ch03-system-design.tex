@@ -32,7 +32,7 @@ In the system architecture diagram. The two outputs from the MovieLens extract t
 \par Movie behavior characteristics refer to information such as the movie being clicked and rated in the system.
 \par When the movie and user characteristics are collected, the "Movie Database" and the "User Database" are formed. These two components can be combined to build a model training set. All data in user database and movie database are structured as shown in the figure UMNN Module. The data structure in the rating table contains someone user's rating of someone movie. The data of the rating table is used as a mapping from the user dataset to the movie dataset. All user nodes and movie nodes that are related in the rating table are connected. All connections in the user dataset and movie dataset have weight values, and their initial value is set to the user's rating of the movie. In summary, the training set UMNN in the system architecture diagram is finally molded. With some machine learning algorithms provided by pytorch, by multiple rounds of training on UMNN, a UMNN with a series of new weights after fitting is constructed. The UMNN model is used as the core module of the recommendation system. When the user selects N movies he likes in the User Interface, the User Interface sends the selected movie id list as input to the UMNN, and the UMNN sends the recommended id list to the User Interface, and the User Interface finally shows the recommended movies' Information.
 
-\subsubsection{UMNN}
+
 \subsubsection{Frontend and Backend}
 Flask is a web micro-framework implemented by Python. The "micro" means that Flask aims to keep the code concise and easy to extend, allowing developers to quickly implement a website or web service using the Python language. It is currently a very popular web framework that uses the Python programming language to implement related web service. Based on Werkzeug and Jinja's lightweight WSGI web application framework, the main feature of the Flask framework is that the core structure is relatively simple, but has strong extensibility and compatibility. Programmers can use Python to quickly implement a website or web service.
 \par Compared with other lightweight web frameworks, the Flask framework has good extensibility, has a flexible Jinja2 template engine, and improves the reuse rate of frontend code. This is irreplaceable by other web frameworks. In fact, the frontend and Backend development can be done in Flask with Python at one time. The template and route modules provided by Flask serve as the frontend and backend functions in the traditional network architecture. We use sqlite3 lightweight database to store some data that needs to be persisted. The entire frontend and backend and database architecture is very lightweight and concise, as shown in the figure.
@@ -52,7 +52,7 @@ Flask is a web micro-framework implemented by Python. The "micro" means that Fla
 \par Werkzeug is a WSGI toolkit that implements requesting service, responding objects, and building some utility functions. It makes that possible to build web frameworks on top of it. The Flask framework embeds Werkzeug as one of its foundations.
 \par Jinja2 is a popular template engine for Python. The web template module combines templates with specific data sources to render dynamic web pages.
 
-\subsubsection{Cold Start}
+\subsubsection{User Initialization}
 From a massive content library, the recommendation system recommends products that the user may like based on the user's current context information and past behavior. If a user's past behavior is empty, that is, the user's past behavior has not been recorded by the system, or he is simply a new user. A cold start problem occurs in this case.
 \begin{figure}[h]
 \caption{Cold start process}
@@ -194,7 +194,7 @@ Adapt the shown of the explanation. The original movie recommendation explanatio
 %weights
 PyTorch\cite{ketkar2017introduction} and TensorFlow\cite{abadi2016tensorflow} are currently the most popular methods for investigating deep learning and neural networks. PyTorch is more useful for researchers, enthusiasts and Individual developers to quickly build prototype in small-scale projects. TensorFlow is more suitable for large-scale deployments, especially when cross-platform and embedded deployments are required. In our research, PyTorch was selected for its vast repository of libraries to handle dataset preprocessing, statistical analysis, plotting, and more.\cite{paszke2019pytorch}.
 
-\subsubsection{Neural Network Model}
+%\subsubsection{Neural Network Model}
 %node and item
 \subsubsection{Algorithm}
 
@@ -241,6 +241,9 @@ att_{p_{1}} = \frac{e^{P_{1} \cdot A^{T}}}{e^{\sigma(p_{1}\cdot A^{T})}  +  e^{\
 \label{algorithm:3}
 \end{algorithm}
 
+\textbf{ \ \ }\\
+\textbf{ \ \ }\\
+\textbf{ \ \ }\\
 \textbf{Training Weights:}\\
 $ A^{T} $ in algorithm \ref{algorithm:3} is a matrix that can be trained with large amounts of data. \\
 $ \sigma $ is sigmoid function.\\

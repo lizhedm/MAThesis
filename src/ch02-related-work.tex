@@ -4,7 +4,11 @@
 \epigraph{That men do not learn very much from the lessons of history is the most important of all the lessons that history has to teach.}{Aldous Huxley}
 
 \subsection{Recommend System}
-Francesco et al. systematically and comprehensively describe the recommendation system in the handbook for Recommender Systems \cite{ricci2011introduction}. Recommender Systems are software tools and techniques providing suggestions for items to be of use to a user. The suggestions provided are aimed at supporting their users in various decision-making processes, such as what items to buy, what music to listen, or what news to read. Recommender systems have proven to be valu- able means for online users to cope with the information overload and have become one of the most powerful and popular tools in electronic commerce. Correspondingly, various techniques for recommendation generation have been proposed and during the last decade, many of them have also been successfully deployed in commercial environments.
+Francesco et al. systematically and comprehensively describe the recommendation system in the handbook for Recommender Systems \cite{ricci2011introduction}. A recommendation system is a software tool and technology used to provide suggestions and recommendations to users. The recommendations are designed to provide users with choices in various decision-making processes, such as which products to pick, which movies to watch, or what news to read. It turns out that the recommendation system can be used to solve the problem of user information overload, and has become one of the most powerful and popular tools in e-commerce. Corresponding to the recommendation system is search engine technology, various technologies for generating recommendations have been proposed, and in the past ten years, many recommendation systems have been successfully deployed in commercial environments.
+\par The entire recommendation system can be regarded as a processing plant, inputting user and item data, outputting a list of items that the user may be interested in, and then taking the first several from the item list as the recommendation result to the user.
+\par In this process, we need to do some filtering and sorting. When outputting results, it is best to let users know why this is recommended, so that the user's acceptance will be higher.
+\par Through some mathematical algorithms, guess what users might like. The recommendation algorithms use some of the user's behavior and some mathematical algorithms to infer what the user might like.
+\par The recommendation algorithm is performed by a machine. While it can process a large amount of information, it is not so humane. In the process of pushing recommendations to the user, the powerful processing energy of the machine can deal with much more information than humans.
 
 \subsection{Explainable Recommendation}
 \subsubsection{Definition}
@@ -37,6 +41,14 @@ Graphs can be used to represent user-user or user-item relationships in most cas
 \subsection{Graph Neural Network Algorithm}
 \subsubsection{GCN}
 Graph Convolutional Network (GCN) can be used to build most of the large datasets we already have. For these models, the goal is then to learn a function of signals/features on a graph $ G=(\upsilon ,\varepsilon ) $.\\
+
+\begin{figure}[h]
+\caption{modularity-based clustering GCN}
+\label{figure:2-2}
+\centering
+\includegraphics[width=1\textwidth]{gcn_algorithm}
+\end{figure}
+
 \begin{itemize}
 \item[(i.)] A feature description $x_{i}$ for every node i; summarized in a N$\times$D feature matrix X (N: number of nodes, D: number of input features).
 \item[(ii.)] A representative description of the graph structure in matrix form; typically in the form of an adjacency matrix A (or some function thereof).
@@ -56,7 +68,7 @@ f(H^{l},A) = \sigma (\hat{D}^{-\frac{1}{2}} \hat{A}\hat{D}^{-\frac{1}{2}}H^{ (l)
 \end{itemize}
 
 \subsubsection{GraphSAGE}
-Low-dimensional vector embeddings of nodes in large graphs1 have proved extremely useful as feature inputs for a wide variety of prediction and graph analysis tasks. Hamilton and his team\cite{hamilton2017inductive}describe the embedding generation, or forward propagation algorithm , which assumes that the model has already been trained and that the parameters are fixed. In particular, they assume that they have learned the parameters of K aggregator functions. The key idea of the method GraphSAGE behind their approach is that they learn how to aggregate feature information from a node's local neighborhood. Specifically, they use Embedding generation (i.e., forward propagation) algorithm in algorithm \ref{algorithm:1}.
+It turns out that low-dimensional vector embeddings of nodes in large graphs are extremely useful as feature inputs for various prediction and graph analysis tasks. Hamilton and his team\cite{hamilton2017inductive}describe the embedding generation, or forward propagation algorithm , which assumes that the model has already been trained and that the parameters are fixed. In particular, they assume that they have learned the parameters of K aggregator functions. The key idea of the method GraphSAGE behind their approach is that they learn how to aggregate feature information from a node's local neighborhood. Specifically, they use Embedding generation (i.e., forward propagation) algorithm in algorithm \ref{algorithm:1}.
 \par Our kernel recommend algorithm for generating path is conceptually inspired by a classic algorithm for testing graph isomorphism and GraphSAGE algorithm.
 \\
 \\
@@ -64,6 +76,7 @@ Low-dimensional vector embeddings of nodes in large graphs1 have proved extremel
 \begin{algorithm}[H]
 \SetAlgoLined
 \textbf{Input:} Graph G($\nu$, $\varepsilon $); input features \{x$_{v}$, $ \forall $ v $ \in $ V\}; depth K; weight matrices W$ ^{k} $, $ \forall $k $ \in $ \{1, ..., K\}; non-linearity $ \sigma $; differentiable aggregator functions AGGREGATE$_{k}$, $ \forall $ k $ \in $ \{1, ..., K\}; neighborhood function N : v  $ \rightarrow $ 2$ ^{v} $  \\
+
 \textbf{Output:} Vector representations z$_{v}$ for all $\nu$ $ \in $ V \\
 h$_{v}^{0}$ $ \leftarrow \chi _{v},\forall v\in V $ \\
  \For{k = 1...}{
@@ -77,5 +90,12 @@ h$_{v}^{0}$ $ \leftarrow \chi _{v},\forall v\in V $ \\
  \caption{GraphSAGE Embedding Generation Algorithm}
  \label{algorithm:1}
 \end{algorithm}
+
+\begin{figure}[h]
+\caption{Visual illustration of the GraphSAGE sample and aggregate approach}
+\label{figure:2-3}
+\centering
+\includegraphics[width=1\textwidth]{GraphSAGE_algorithm}
+\end{figure}
 
 \cleardoublepage
